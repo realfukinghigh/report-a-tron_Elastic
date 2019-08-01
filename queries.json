@@ -1,0 +1,188 @@
+# create asset
+POST reportatron/_doc
+{
+	"asset_stuff": {
+		"asset_name": "<assetName>",
+		"asset_type": "<assetType>",
+		"asset_owner": "<assetOwner>",
+		"asset_notes": "<assetNotes>",
+		"asset_internet_facing": <1/0>
+	  }
+}
+
+# create engagement
+POST reportatron/_doc
+{
+	"engagement_stuff": {
+		"asset_id": "<asset _id>",
+		"engagement_form_location": "<engFormLocation>",
+		"engagement_contact": "<engContact>",
+		"engagement_details": "<engDetails>",
+		"engagement_notes": "<engNotes>",
+		"engagement_rating": "<engRiskRating>",
+		"engagement_status": "<engStatus>"
+	  }
+}
+
+# create test
+POST reportatron/_doc
+{
+	"test_stuff": {
+		"asset_id": "<asset _id>",
+		"engagement_id": "<engagement _id>",
+		"test_type": "<testType>",
+		"test_notes": "<testNotes>",
+		"test_date": "<testDate>",
+		"test_exec_summary": "<testExecSummary>"
+	}
+}
+
+# create issue - if we know asset details, add them all to the _doc
+POST reportatron/_doc
+{
+	"issue_stuff": {
+		"test_id": "<test _id>",
+		"eng_id": "<eng _id>",
+		"asset_id": "<asset _id>",
+		"issue_title": "<issueTitle>",
+		"created_on": "<issueCreatedOn>",
+		"issue_description": "<issueDescription>",
+		"issue_remediation": "<issueRemediation>",
+		"issue_rating": "<issueRating>",
+		"issue_notes": "<issueNotes>",
+		"issue_details": "<issueDetails>",
+		"issue_status": "<issueStatus>",
+		"ra_stuff": {
+		  "ra_owner": "<raOwner>",
+		  "ra_date": "<raDate>",
+		  "ra_expires": "<raExpires>"
+		}
+	}
+}
+
+# get all assets
+GET reportatron/_search
+{
+  "size": 10000,
+    "query": {
+        "bool": {
+            "must_not": [{
+                "exists": {
+                    "field": "engagement_stuff"
+                }
+            },
+            {
+              "exists": {
+                "field": "test_stuff"
+              }
+            },
+            {
+              "exists": {
+                "field": "issue_stuff"
+              }
+            },
+            {
+              "exists": {
+                "field": "third_party_stuff"
+              }
+            }
+            ]
+        }
+    }
+}
+
+# get all application assets
+GET reportatron/_search
+{   "size": 1000,
+    "query": {
+        "bool": {
+            "must": {
+              "term": {
+                "asset_stuff.asset_type.keyword": "Application"
+              }
+            }
+        }
+      }
+    }
+	
+# get internet facing applications
+GET reportatron/_search
+{   "size": 1000,
+    "query": {
+        "bool": {
+            "must": [{
+              "term": {
+                "asset_stuff.asset_type.keyword": "Application"
+              }
+            },
+            {
+              "term": {
+                "asset_stuff.asset_internet_facing": 1
+              }
+            }
+          ]
+        }
+      }
+    }
+	
+# get internet facing open issues
+GET reportatron/_search
+{   "size": 1000,
+    "query": {
+        "bool": {
+            "must": [{
+			  "term": {
+				"asset_stuff.asset_internet_facing": 1
+			  }
+			},
+			{
+			  "term": {
+				"issue_stuff.issue_status.keyword": "Open"
+			  }
+			}
+          ]
+        }
+      }
+    }
+
+# get issues for asset
+GET reportatron/_search
+{   "size": 1000,
+    "query": {
+        "bool": {
+            "filter": {
+              "term": {
+                "issue_stuff.asset_id.keyword": "<asset_id>"
+              }
+            }
+        }
+    }
+}
+
+# get issues for test
+GET reportatron/_search
+{   "size": 1000,
+    "query": {
+        "bool": {
+            "filter": {
+              "term": {
+                "issue_stuff.test_id.keyword": "<test_id>"
+              }
+            }
+        }
+    }
+}
+
+# get issues for engagement
+GET reportatron/_search
+{   "size": 1000,
+    "query": {
+        "bool": {
+            "filter": {
+              "term": {
+                "issue_stuff.eng_id.keyword": "<eng_id>"
+              }
+            }
+        }
+    }
+}

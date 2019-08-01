@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<p class="form_caption">{% if assetName %}{{ assetName }}{% else %}New Engagement{% endif %}</p>
+<div class="forms">
+<form class="entry_form" action="/newengagement" method="post">
+<label for="engformLocation">Engagement Form Location</label>
+<input type="text" name="engformLocation" id="engformLocation" required autofocus>
+<label for="mainContact">Main Contact</label>
+<input type="text" name="mainContact" id="mainContact" required>
+<label for="riskRating">Risk Rating</label>
+<input type="text" name="riskRating" id="riskRating" required>
+<label for="receivedOn">Received On</label>
+<input type="text" name="receivedOn" id="receivedOn" required>
+<label for="actionTaken">Action Taken</label>
+<textarea type="text" name="actionTaken" id="actionTaken"></textarea>
+<label for="engNotes">Engagement Notes</label>
+<textarea type="text" name="engNotes" id="engNotes"></textarea>
+{% if assetID %}<input type="hidden" name="assetID" id="assetID" value="{{ assetID }}">{% else %}<input type="hidden" name="assetID" id="assetID" value="">
+<div class="button_frame">{% endif %}
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Submit Data</button>
+</div>
+</form>
+</div>
+{% endblock %}

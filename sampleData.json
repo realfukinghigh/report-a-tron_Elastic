@@ -1,0 +1,25 @@
+# assets
+{"asset_stuff" : {"asset_name" : "My New Application", "asset_type" : "Application", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 1 }}
+{"asset_stuff" : {"asset_name" : "Some Third Party", "asset_type" : "Third Party", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 0}}
+{"asset_stuff" : {"asset_name" : "Some Other Third Party", "asset_type" : "Third Party", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 0}}
+{"asset_stuff" : {"asset_name" : "Second Application", "asset_type" : "Application", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 0}}
+{"asset_stuff" : {"asset_name" : "Internet Banking", "asset_type" : "Application", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 1}}
+
+# engagements
+{"engagement_stuff" : {"asset_id": "xto3NGwBK8av39YM9EaX", "engagement_form_location" : "Email - do something", "engagement_contact" : "Dave Mundane", "engagement_details" : "Planning to do some upgrades", "engagement_notes" : "Do some testing", "engagement_received_on": "2019-01-01", "engagement_rating" : "High", "engagement_status" : "Open"}}
+
+{"engagement_stuff" : {"engagement_form_location" : "F://somewhere", "engagement_contact" : "Dave Mundane", "engagement_details" : "Planning to do some upgrades", "engagement_notes" : "Do some testing", "engagement_received_on": "2019-01-02", "engagement_rating" : "High", "engagement_status" : "Open"}}
+{"engagement_stuff" : {"engagement_form_location" : "F://somewhere", "engagement_contact" : "Dave Mundane", "engagement_details" : "Planning to do some upgrades", "engagement_notes" : "Risk Assessment Required", "engagement_received_on": "2019-01-03", "engagement_rating" : "Medium", "engagement_status" : "Open"}}
+{"engagement_stuff" : {"engagement_form_location" : "F://somewhereelse", "engagement_contact" : "Dave Mundane", "engagement_details" : "New application install", "engagement_notes" : "Do some testing", "engagement_received_on": "2019-01-04", "engagement_rating" : "Medium", "engagement_status" : "Open"}}
+{"engagement_stuff" : {"engagement_form_location" : "F://somewhere//someplace", "engagement_contact" : "Dave Mundane", "engagement_details" : "Vendor to provide software", "engagement_notes" : "Third party review required", "engagement_received_on": "2019-01-05", "engagement_rating" : "High", "engagement_status" : "Open"}}
+
+# tests
+{"test_stuff" : {"asset_id": "xto3NGwBK8av39YM9EaX", "engagement_id": "yNo5NGwBK8av39YMiEaF", "test_type" : "Security Risk Assessment", "test_notes" : "Some notes about the test", "test_date" : "2019-01-10", "test_exec_summary" : "Some boring stuff for the report"}}
+
+# issues
+{"issue_stuff" : {"asset_id": "xto3NGwBK8av39YM9EaX", "engagement_id": "yNo5NGwBK8av39YMiEaF", "test_id": "yto6NGwBK8av39YMW0ae", "issue_title" : "", "created_on" : "2019-02-13", "issue_description" : "A description of an issue", "issue_remediation" : "Remediation stuff for an issue", "issue_rating" : "High", "issue_notes" : "Wont fix", "issue_details" : "navigate here, do stuff", "issue_status" : "Open", "ra_stuff" : {"ra_owner" : "",  "ra_date" : "",  "ra_expires" : ""}}}
+
+
+{"issue_stuff" : {"issue_title" : "XSS", "created_on" : "2019-01-13", "issue_description" : "A description of an issue", "issue_remediation" : "Remediation stuff for an issue", "issue_rating" : "High", "issue_notes" : "Wont fix", "issue_details" : "navigate here, do stuff", "issue_status" : "Open", "ra_stuff" : {"ra_owner" : "",  "ra_date" : "",  "ra_expires" : ""}}, "test_stuff" : {"test_type" : "Application Security Test", "test_notes" : "Some notes about the test", "test_date" : "2019-01-13", "test_exec_summary" : "Some boring stuff for the report"},"engagement_stuff" : {"engagement_form_location" : "F://somewhere//nowhere", "engagement_contact" : "Dave Mundane", "engagement_details" : "Vendor to provide software", "engagement_notes" : "Need to do some security testing", "engagement_received_on": "2019-01-10", "engagement_rating" : "High", "engagement_status" : "Open"},"asset_stuff" : {"asset_name" : "Internet Banking", "asset_type" : "Application", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 1}}
+
+{"test_stuff" : {"test_type" : "Security Risk Assessment", "test_notes" : "Some notes about the test", "test_date" : "2019-01-10", "test_exec_summary" : "Some boring stuff for the report"},"engagement_stuff" : {"engagement_form_location" : "F://somewhereelse", "engagement_contact" : "Dave Mundane", "engagement_details" : "New application install", "engagement_notes" : "Do some testing", "engagement_rating" : "Medium", "engagement_status" : "Open"},"asset_stuff" : {"asset_name" : "Internet Banking", "asset_type" : "Application", "asset_owner" : "Dave Mundane", "asset_notes" : "This is for doing stuff", "asset_internet_facing" : 1}}

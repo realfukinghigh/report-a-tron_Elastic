@@ -1,0 +1,50 @@
+.tablea {
+    border: solid 1px #2d77ef;
+    border-collapse: collapse;
+    border-spacing: 0;
+	width: 80%;
+	padding-top: 8px;
+	margin-left: 70px;
+  }
+  
+.tablea caption {
+	text-align: center;
+	font-size: 20px !important;
+	padding-bottom: 20px;
+	padding-top: 20px;
+}
+  
+.tablea thead th {
+    background-color: #379ba8;
+    border: solid 1px #a0c4ff;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+.tablea tbody td {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+	font-size: 12px !important;
+}
+
+.table_index {
+	margin-top: 30px;
+	margin-left: 10%;
+	width: 60%;
+	border-collapse: collapse;
+    border-spacing: 0;
+	text-align: justify;
+}
+
+.table_index td {
+	border: 30px solid transparent;
+}
+
+.tablea input[type=text], select, textarea[type=text], select_menu[type=text]{
+	font-size: 12px;
+	border: none;
+	padding: 3px;
+}
+  
