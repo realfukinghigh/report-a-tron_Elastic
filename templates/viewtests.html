@@ -12,6 +12,7 @@
 		<th scope="col">Main Contact</th>
 		<th scope="col">Created On</th>
 		<th scope="col">Test Date</th>
+    <th scope="col">Update Test</th>
 		<th scope="col">View Issues</th>
 		<th scope="col">Create Issues</th>
 		<th scope="col">Write Report</th>
@@ -26,6 +27,7 @@
 		<td data-title="mainContact">{{row['_source']['test_stuff']['test_base_location']}}</td>
 		<td data-title="createdOn">{{row['_source']['test_stuff']['test_created_on']}}</td>
 		<td data-title="testDate">{{row['_source']['test_stuff']['test_date']}}</td>
+    <td data-title="updatetest"><a class="push_button fa-update darkblue" href="{{ url_for('updatetest', testID=row['_id']) }}"></a></td>
 		<td data-title="viewissues"><a class="push_button fa-eye darkblue" href="{{ url_for('viewissues', testID=row['_id']) }}"></a></td>
 		<td data-title="createnewissue"><a class="push_button fa-plus darkblue" href="{{ url_for('createnewissue', testID=row['_id']) }}"></a></td>
 		<td data-title="testreport"><a class="push_button fa-file darkblue" href="{{ url_for('testreport', testID=row['_id']) }}"></a></td>

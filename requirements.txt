@@ -1,0 +1,7 @@
+markdown
+datetime
+flask
+requests
+configparser
+psycopg2-binary
+pyyaml
