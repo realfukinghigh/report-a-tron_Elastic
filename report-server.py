@@ -16,7 +16,6 @@ docConnection = singledocs.Docs()
 engagementConnection = engagements.Engagements()
 testConnection = tests.Tests()
 
-# root handler to serve the index page
 app = Flask(__name__)
 @app.route("/")
 def main():
@@ -42,12 +41,10 @@ def gethtmlreport():
 def thedata():
 	return assetsflask.thedata()
 
-# handler to show the report page containing the main form
 @app.route("/report")
 def report():
 	return render_template('report.html')
 
-# handler for an endpoint to receive the data from index, asvname etc
 @app.route("/createapp", methods=['POST'])
 def createapp():
 	return assetsflask.createapp()
@@ -64,74 +61,25 @@ def updateassetapi():
 def engagements():
 	return engagementsflask.engagements()
 
-# handler for an endpoint to receive the data from newengagements etc
 @app.route("/newengagement", methods=['POST'])
 def newengagement():
 	return engagementsflask.newengagement()
-#	_assetID = request.form['assetID']
-#	_engformLocation = request.form['engformLocation']
-#	_mainContact = request.form['mainContact']
-#	_riskRating = request.form['riskRating']
-#	_receivedOn = request.form['receivedOn']
-#	_actionTaken = request.form['actionTaken']
-#	_engNotes = request.form['engNotes']
-#	if _assetID:
-#		try:
-#			timenow = datetime.datetime.now().isoformat().split(".")[0]
-#			engagementConnection.createEngagement(_assetID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
-#			return redirect(url_for("viewengagements"))
-#		except:
-#			return redirect(url_for("error"))
-#
-#	else:
-#		try:
-#			timenow = datetime.datetime.now().isoformat().split(".")[0]
-#			engagementConnection.createEngagement(None,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
-#			return redirect(url_for("viewengagements"))
-#		except:
-#			return redirect(url_for("error"))
 
 @app.route("/openengagements")
 def openengagements():
 	return engagementsflask.openengagements()
-#	data = engagementConnection.getOpenEngagements()
-#	return render_template('viewengagements.html', data=data)
 
 @app.route("/viewengagements")
 def viewengagements():
 	return engagementsflask.viewengagements()
-#	assetID = request.args.get('assetID')
-#	assetName = request.args.get('assetName')
-#	if assetID:
-#		data = engagementConnection.getEngagementsForAsset(assetID)
-#		return render_template('viewengagements.html', data=data, assetName=assetName)
-#	else:
-#		data = engagementConnection.getEngagements()
-#		return render_template('viewengagements.html', data=data)
 
 @app.route("/updateEng")
 def updateEng():
 	return engagementsflask.updateEng()
-#	_engID = request.args.get('engID')
-#	data = docConnection.getDoc(_engID)
-#	return render_template('updateeng.html', data=data)
 
 @app.route("/updateengagement", methods=['POST'])
 def updateengagement():
 	return engagementsflask.updateengagement()
-#	_engID = request.form['engId']
-#	_engformLocation = request.form['engformLocation']
-#	_mainContact = request.form['mainContact']
-#	_riskRating = request.form['riskRating']
-#	_receivedOn = request.form['receivedOn']
-#	_actionTaken = request.form['actionTaken']
-#	_engNotes = request.form['engNotes']
-#	_engStatus = request.form['engStatus']
-#	try:
-#		engagementConnection.updateEngagement(_engID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes,_engStatus)
-#		return redirect(url_for("viewengagements"))
-#	except:
-#		return redirect(url_for("error"))
 
 @app.route("/newtest", methods=['GET'])
 def newtest():
