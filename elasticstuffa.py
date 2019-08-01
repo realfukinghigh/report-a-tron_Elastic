@@ -6,7 +6,7 @@ import json
 import requests
 
 headers = {"Content-Type": "application/json"}
-url = "http://192.168.130.135:9200/reportatron/"
+url = "http://192.168.5.131:9200/reportatron/"
 
 def getAssets(): 
 

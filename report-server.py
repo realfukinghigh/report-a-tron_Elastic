@@ -5,9 +5,15 @@ import datetime
 import requests
 import markdown
 import configparser
-import elasticstuff
+import elasticstuffa
+from elasticstuff import assets, singledocs, engagements, tests
 #import reportWriter
 #import theStatMachine as stat
+
+assetConnection = assets.Assets()
+docConnection = singledocs.Docs()
+engagementConnection = engagements.Engagements()
+testConnection = tests.Tests()
 
 # root handler to serve the index page
 app = Flask(__name__)
@@ -33,15 +39,11 @@ def gethtmlreport():
 	
 @app.route("/thedata")
 def thedata():
-	data = elasticstuff.getAssets()
+	#data = elasticstuff.getAssets()
+	
+	data = assetConnection.getAssets()
 	return render_template('thedata.html', data=data)
 	
-@app.route("/appdata", methods=['GET'])
-def appdata():
-	app_id = request.args.get('appID')
-	data = dbstuff.getSingleAssetTestData(asset_id)
-	return render_template('appdata.html', data=data)
-
 # handler to show the report page containing the main form
 @app.route("/report")
 def report():
@@ -57,10 +59,16 @@ def createapp():
 	_assetInternetFacing = request.form['assetInternetFacing']
 	try: 
 		timenow = datetime.datetime.now().isoformat().split(".")[0]
-		elasticstuff.createAsset(_assetName, _assetType, _assetOwner, timenow, _assetNotes, _assetInternetFacing)
+		assetConnection.createAsset(_assetName, _assetType, _assetOwner, timenow, _assetNotes, _assetInternetFacing)
 		return redirect(url_for("thedata"))
 	except: 
 		return redirect(url_for("error"))
+		
+@app.route("/updateasset")
+def updateasset():
+	_assetID = request.args.get('assetID')
+	data = docConnection.getDoc(_assetID)
+	return render_template('updateasset.html', data=data)
 	
 @app.route("/engagements", methods=['GET'])
 def engagements():
@@ -84,22 +92,22 @@ def newengagement():
 	if _assetID: 
 		try: 
 			timenow = datetime.datetime.now().isoformat().split(".")[0]
-			elasticstuff.createEngagement(_assetID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
-			return redirect(url_for("thedata"))
+			engagementConnection.createEngagement(_assetID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
+			return redirect(url_for("viewengagements"))
 		except: 
 			return redirect(url_for("error"))
 	
 	else: 
 		try: 
 			timenow = datetime.datetime.now().isoformat().split(".")[0]
-			elasticstuff.createEngagement(None,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
-			return redirect(url_for("thedata"))
+			engagementConnection.createEngagement(None,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
+			return redirect(url_for("viewengagements"))
 		except: 
 			return redirect(url_for("error"))
 
 @app.route("/openengagements")
 def openengagements(): 
-	data = elasticstuff.getOpenEngagements()
+	data = engagementConnection.getOpenEngagements()
 	return render_template('viewengagements.html', data=data)
 	
 @app.route("/viewengagements")
@@ -107,23 +115,17 @@ def viewengagements():
 	assetID = request.args.get('assetID')
 	assetName = request.args.get('assetName')
 	if assetID:
-		data = elasticstuff.getEngagementsForAsset(assetID)
+		data = engagementConnection.getEngagementsForAsset(assetID)
 		return render_template('viewengagements.html', data=data, assetName=assetName)
 	else: 
-		data = elasticstuff.getEngagements()
+		data = engagementConnection.getEngagements()
 		return render_template('viewengagements.html', data=data)
 		
 @app.route("/updateEng")
 def updateEng():
 	_engID = request.args.get('engID')
-	data = elasticstuff.getDocument(_engID)
+	data = docConnection.getDoc(_engID)
 	return render_template('updateeng.html', data=data)
-	
-@app.route("/updateasset")
-def updateasset():
-	_assetID = request.args.get('assetID')
-	data = elasticstuff.getDocument(_assetID)
-	return render_template('updateasset.html', data=data)
 	
 @app.route("/updateengagement", methods=['POST'])
 def updateengagement(): 
@@ -136,7 +138,7 @@ def updateengagement():
 	_engNotes = request.form['engNotes']
 	_engStatus = request.form['engStatus']
 	try: 
-		elasticstuff.updateEngagement(_engID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes,_engStatus)
+		engagementConnection.updateEngagement(_engID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes,_engStatus)
 		return redirect(url_for("viewengagements"))
 	except: 
 		return redirect(url_for("error"))
@@ -151,20 +153,19 @@ def updateassetapi():
 	_assetInternetFacing = request.form['assetInternetFacing']
 	print(_assetID, _assetName, _assetOwner, _assetNotes)
 	try: 
-		elasticstuff.updateAsset(_assetID, _assetName, _assetType, _assetOwner, _assetNotes, _assetInternetFacing)
+		assetConnection.updateAsset(_assetID, _assetName, _assetType, _assetOwner, _assetNotes, _assetInternetFacing)
 		return redirect(url_for("thedata"))
 	except: 
 		return redirect(url_for("error"))
 		
 @app.route("/newtest", methods=['GET'])
 def newtest():
-	assetID = request.args.get('assetID')
-	engID = request.args.get('engID')
-	return render_template('newtest.html', assetID=assetID, engID=engID)
+	_assetID = request.args.get('assetID')
+	_engID = request.args.get('engID')
+	return render_template('newtest.html', assetID=_assetID, engID=_engID)
 	
 @app.route("/createtest", methods=['POST'])
 def createtest():
-	_assetID = request.form['assetID']
 	_engID = request.form['engID']
 	_testType = request.form['testType']
 	_execSummary = request.form['execSummary']
@@ -175,26 +176,29 @@ def createtest():
 	_testNotes = request.form['testNotes']
 	try: 
 		timenow = datetime.datetime.now().isoformat().split(".")[0]
-		print(_assetID,_engID,_testType,_execSummary,_baseLocation,_limitations,_mainContact,timenow,_testDate,_testNotes)
-		dbstuff.createNewTest(_engID,_testType,_execSummary,_baseLocation,_limitations,_mainContact,timenow,_testDate,_testNotes)
+		
+		if _engID: 
+			testConnection.createTest(_engID,_testType,_execSummary,_baseLocation,_limitations,_mainContact,timenow,_testDate,_testNotes)
+		else: 
+			testConnection.createTest(None,_testType,_execSummary,_baseLocation,_limitations,_mainContact,timenow,_testDate,_testNotes)
+			
 		return redirect(url_for("thedata"))
-	except: 
+	except:
 		return redirect(url_for("error"))
 	
 	
 @app.route("/viewtests", methods=['GET'])
 def viewtests():
-	engID = request.args.get('engID')
-	assetID = request.args.get('assetID')
-	assetName = request.args.get('assetName')
-	if engID:
-		data = dbstuff.getTestsForEngagement(engID)
-		return render_template('viewtests.html', data=data, assetName=assetName)
-	if assetID:
-		data = dbstuff.getTestsForAsset(assetID)
+	_engID = request.args.get('engID')
+	_assetID = request.args.get('assetID')
+	if _engID:
+		data = testConnection.getTestsForEngagement(_engID)
+		return render_template('viewtests.html', data=data, assetName=_assetName)
+	if _assetID:
+		data = testConnection.getTestsForAsset(_assetID)
 		return render_template('viewtests.html', data=data, assetName=assetName)
 	else: 
-		data = dbstuff.getAllTestData()
+		data = testConnection.getTests()
 		return render_template('viewtests.html', data=data)
 		
 		

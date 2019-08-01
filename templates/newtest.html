@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<p class="form_caption">{{ assetName }}</p>
+<div class="forms">
+<form class="entry_form" action="/createtest" method="post">
+<label for="testType">Test Type</label>
+<input type="text" name="testType" id="testType" required autofocus>
+<label for="execSummary">Executive Summary</label>
+<textarea type="text" name="execSummary" id="execSummary" required></textarea>
+<label for="baseLocation">Base Location</label>
+<input type="text" name="baseLocation" id="baseLocation" required>
+<label for="limitations">Limitations</label>
+<input type="text" name="limitations" id="limitations" required>
+<label for="mainContact">Main Contact</label>
+<input type="text" name="mainContact" id="mainContact" required>
+<label for="testDate">Test Date</label>
+<input type="text" name="testDate" id="testDate">
+<label for="testNotes">Test Notes</label>
+<textarea type="text" name="testNotes" id="testNotes"></textarea>
+<input type="hidden" name="assetID" id="assetID" value="{{ assetID }}">
+<input type="hidden" name="engID" id="engID" value="{{ engID }}">
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Submit Data</button>
+</div>
+</form>
+</div>
+{% endblock %}

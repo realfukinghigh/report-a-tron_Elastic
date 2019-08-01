@@ -11,6 +11,7 @@
         <th scope="col">Main Contact</th>
 		<th scope="col">Risk Rating</th>
 		<th scope="col">Received On</th>
+		<th scope="col">Engagement Notes</th>
 		<th scope="col">Action Taken</th>
 		<th scope="col">Status</th>
 		<th scope="col">Update Eng</th>
@@ -26,6 +27,7 @@
         <td data-title="mainContact">{{row['_source']['engagement_stuff']['engagement_main_contact']}}</td>
 		<td data-title="riskRating">{{row['_source']['engagement_stuff']['engagement_risk_rating']}}</td>
 		<td data-title="receivedOn">{{row['_source']['engagement_stuff']['engagement_received_on']}}</td>
+		<td data-title="engNotes">{{row['_source']['engagement_stuff']['engagement_notes']}}</td>
 		<td data-title="actionTaken">{{row['_source']['engagement_stuff']['engagement_action_taken']}}</td>
 		<td data-title="engStatus">{{row['_source']['engagement_stuff']['engagement_status']}}</td>
 		<td data-title="updateEng"><a class="push_button fa-update darkblue" href="{{ url_for('updateEng', engID=row['_id']) }}"></a></td>

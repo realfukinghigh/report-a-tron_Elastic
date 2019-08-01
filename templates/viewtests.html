@@ -1,0 +1,36 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+  <table class="tablea">
+    <caption>{% if assetName %}{{ assetName }}{% else %}Test Data{% endif %}</caption>
+    <thead>
+      <tr>
+		<th scope="col">Asset Name</th>
+        <th scope="col">Test Type</th>
+        <th scope="col">Base Location</th>
+		<th scope="col">Main Contact</th>
+		<th scope="col">Created On</th>
+		<th scope="col">Test Date</th>
+		<th scope="col">View Issues</th>
+		<th scope="col">Create Issues</th>
+		<th scope="col">Write Report</th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for row in data %}
+      <tr>
+		<td scope="row" data-title="assetName">{% if 'asset_stuff' in row['_source']  %}{{row['_source']['asset_stuff']['asset_name']}}{% else %}None{% endif %}</td>
+        <td data-title="testType">{{row['_source']['test_stuff']['test_type']}}</td>
+        <td data-title="baseLocation">{{row['_source']['test_stuff']['test_base_location']}}</td>
+		<td data-title="mainContact">{{row['_source']['test_stuff']['test_base_location']}}</td>
+		<td data-title="createdOn">{{row['_source']['test_stuff']['test_created_on']}}</td>
+		<td data-title="testDate">{{row['_source']['test_stuff']['test_date']}}</td>
+		<td data-title="viewissues"><a class="push_button fa-eye darkblue" href="{{ url_for('viewissues', testID=row['_id']) }}"></a></td>
+		<td data-title="createnewissue"><a class="push_button fa-plus darkblue" href="{{ url_for('createnewissue', testID=row['_id']) }}"></a></td>
+		<td data-title="testreport"><a class="push_button fa-file darkblue" href="{{ url_for('testreport', testID=row['_id']) }}"></a></td>
+      </tr>
+	  {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
