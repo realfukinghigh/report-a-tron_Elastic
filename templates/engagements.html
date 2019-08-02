@@ -2,22 +2,22 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="static/forms.css">
 <link rel="stylesheet" type="text/css" href="static/buttons.css">
-<p class="form_caption">{% if assetName %}{{ assetName }}{% else %}New Engagement{% endif %}</p>
+<p class="form_caption">{% if asset_name %}{{ asset_name }}{% else %}New Engagement{% endif %}</p>
 <div class="forms">
 <form class="entry_form" action="/newengagement" method="post">
-<label for="engformLocation">Engagement Form Location</label>
-<input type="text" name="engformLocation" id="engformLocation" required autofocus>
-<label for="mainContact">Main Contact</label>
-<input type="text" name="mainContact" id="mainContact" required>
-<label for="riskRating">Risk Rating</label>
-<input type="text" name="riskRating" id="riskRating" required>
-<label for="receivedOn">Received On</label>
-<input type="text" name="receivedOn" id="receivedOn" required>
-<label for="actionTaken">Action Taken</label>
-<textarea type="text" name="actionTaken" id="actionTaken"></textarea>
-<label for="engNotes">Engagement Notes</label>
-<textarea type="text" name="engNotes" id="engNotes"></textarea>
-{% if assetID %}<input type="hidden" name="assetID" id="assetID" value="{{ assetID }}">{% else %}<input type="hidden" name="assetID" id="assetID" value="">
+<label for="engagement_form_location">Engagement Form Location</label>
+<input type="text" name="engagement_form_location" id="engagement_form_location" required autofocus>
+<label for="engagement_main_contact">Main Contact</label>
+<input type="text" name="engagement_main_contact" id="engagement_main_contact" required>
+<label for="engagement_risk_rating">Risk Rating</label>
+<input type="text" name="engagement_risk_rating" id="engagement_risk_rating" required>
+<label for="engagement_received_on">Received On</label>
+<input type="text" name="engagement_received_on" id="engagement_received_on" required>
+<label for="engagement_action_taken">Action Taken</label>
+<textarea type="text" name="engagement_action_taken" id="engagement_action_taken"></textarea>
+<label for="engagement_notes">Engagement Notes</label>
+<textarea type="text" name="engagement_notes" id="engagement_notes"></textarea>
+{% if asset_id %}<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">{% else %}<input type="hidden" name="asset_id" id="asset_id" value="">
 <div class="button_frame">{% endif %}
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Submit Data</button>

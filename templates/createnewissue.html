@@ -1,0 +1,41 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<div class="forms">
+<form class="entry_form" action="/createissueapi" method="post">
+<label for="issue_title">Issue Title</label>
+<input type="text" name="issue_title" id="issue_title" required autofocus>
+<label for="issue_risk_rating">Risk Rating</label>
+<input type="text" name="issue_risk_rating" id="issue_risk_rating" required>
+<label for="issue_risk_impact">Impact</label>
+<input type="text" name="issue_risk_impact" id="issue_risk_impact" required>
+<label for="issue_risk_likelihood">Likelihood</label>
+<input type="text" name="issue_risk_likelihood" id="issue_risk_likelihood" required>
+<label for="issue_description">Issue Description</label>
+<textarea type="text" name="issue_description" id="issue_description" required></textarea>
+<label for="issue_remediation">Remediation</label>
+<textarea type="text" name="issue_remediation" id="issue_remediation" required></textarea>
+<label for="issue_location">Issue Location</label>
+<input type="text" name="issue_location" id="issue_location" required>
+<label for="issue_status" class="status">Status
+<select name="issue_status" id="issue_status">
+<option selected value="base"></option>
+<option value="Open">Open</option>
+<option value="Risk Accepted">Risk Accepted</option>
+<option value="Closed">Closed</option>
+</select>
+</label>
+<label for="issue_notes">Issue Notes</label>
+<textarea type="text" name="issue_notes" id="issue_notes"></textarea>
+<label for="issue_details">Issue details</label>
+<textarea type="text" name="issue_details" id="issue_details"></textarea>
+<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">
+<input type="hidden" name="engagement_id" id="engagement_id" value="{{ engagement_id }}">
+<input type="hidden" name="test_id" id="test_id" value="{{ test_id }}">
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Log Another</button>
+</div>
+</form>
+</div>
+{% endblock %}

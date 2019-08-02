@@ -13,32 +13,32 @@ def thedata():
     return render_template('thedata.html', data=data)
 
 def createapp():
-	_assetName = request.form['assetName']
-	_assetType = request.form['assetType']
-	_assetOwner = request.form['assetOwner']
-	_assetNotes = request.form['assetNotes']
-	_assetInternetFacing = request.form['assetInternetFacing']
+	asset_name = request.form['asset_name']
+	asset_type = request.form['asset_type']
+	asset_owner = request.form['asset_owner']
+	asset_notes = request.form['asset_notes']
+	asset_internet_facing = request.form['asset_internet_facing']
 	try:
 		timenow = datetime.datetime.now().isoformat().split(".")[0]
-		assetConnection.createAsset(_assetName, _assetType, _assetOwner, timenow, _assetNotes, _assetInternetFacing)
+		assetConnection.createAsset(asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
 		return redirect(url_for("thedata"))
 	except:
 		return redirect(url_for("error"))
 
 def updateasset():
-	_assetID = request.args.get('assetID')
-	data = docConnection.getDoc(_assetID)
+	asset_id = request.args.get('asset_id')
+	data = docConnection.getDoc(asset_id)
 	return render_template('updateasset.html', data=data)
 
 def updateassetapi():
-	_assetID = request.form['assetId']
-	_assetName = request.form['assetName']
-	_assetType = request.form['assetType']
-	_assetOwner = request.form['assetOwner']
-	_assetNotes = request.form['assetNotes']
-	_assetInternetFacing = request.form['assetInternetFacing']
+	asset_id = request.form['asset_id']
+	asset_name = request.form['asset_name']
+	asset_type = request.form['asset_type']
+	asset_owner = request.form['asset_owner']
+	asset_notes = request.form['asset_notes']
+	asset_internet_facing = request.form['asset_internet_facing']
 	try:
-		assetConnection.updateAsset(_assetID, _assetName, _assetType, _assetOwner, _assetNotes, _assetInternetFacing)
+		assetConnection.updateAsset(asset_id, asset_name, _asset_type, asset_owner, _asset_notes, asset_internet_facing)
 		return redirect(url_for("thedata"))
 	except:
 		return redirect(url_for("error"))

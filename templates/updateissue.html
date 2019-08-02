@@ -1,0 +1,54 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<p class="form_caption">Update Issue - ID: {{data['_id']}}</p>
+<div class="forms">
+<form class="entry_form" action="/updateissueapi" method="post">
+<label for="issue_title">Issue Title</label>
+<input type="text" name="issue_title" id="issue_title" value="{{data['_source']['issue_stuff']['issue_title']}}">
+<label for="issue_risk_rating">Risk Rating</label>
+<input type="text" name="issue_risk_rating" id="issue_risk_rating" value="{{data['_source']['issue_stuff']['issue_risk_rating']}}">
+<label for="issue_risk_impact">Risk Impact</label>
+<input type="text" name="issue_risk_impact" id="issue_risk_impact" value="{{data['_source']['issue_stuff']['issue_risk_impact']}}">
+<label for="issue_risk_likelihood">Risk Likelihood</label>
+<input type="text" name="issue_risk_likelihood" id="issue_risk_likelihood" value="{{data['_source']['issue_stuff']['issue_risk_likelihood']}}">
+<label for="issue_status">Issue Status</label>
+<input type="text" name="issue_status" id="issue_status" value="{{data['_source']['issue_stuff']['issue_status']}}">
+<label for="issue_location">Location</label>
+<input type="text" name="issue_location" id="issue_location" value="{{data['_source']['issue_stuff']['issue_location']}}">
+<label for="issue_description">Description</label>
+<textarea type="text" name="issue_description" id="issue_description">{{data['_source']['issue_stuff']['issue_description']}}</textarea>
+<label for="issue_remediation">Remediation</label>
+<textarea type="text" name="issue_remediation" id="issue_remediation">{{data['_source']['issue_stuff']['issue_remediation']}}</textarea>
+<label for="issue_details">Issue Details</label>
+<textarea type="text" name="issue_details" id="issue_details">{{data['_source']['issue_stuff']['issue_details']}}</textarea>
+<label for="issue_notes">Issue Notes</label>
+<textarea type="text" name="issue_notes" id="issue_notes">{{data['_source']['issue_stuff']['issue_notes']}}</textarea>
+{% if "issue_ra_stuff" in data['_source'] %}
+<label for="issue_ra_date">Risk Acceptance Date</label>
+<input type="text" name="issue_ra_date" id="issue_ra_date" value="{{data['_source']['issue_stuff']['issue_ra_stuff']['issue_ra_date']}}">
+<label for="issue_ra_owner">Risk Acceptance Owner</label>
+<input type="text" name="issue_ra_owner" id="issue_ra_owner" value="{{data['_source']['issue_stuff']['issue_ra_stuff']['issue_ra_owner']}}">
+<label for="issue_ra_expiry">Risk Acceptance Expiry</label>
+<input type="text" name="issue_ra_expiry" id="issue_ra_expiry" value="{{data['_source']['issue_stuff']['issue_ra_stuff']['issue_ra_expiry']}}">
+<label for="issue_ra_notes">Risk Acceptance Notes</label>
+<textarea type="text" name="issue_ra_notes" id="issue_ra_notes">{{data['_source']['issue_stuff']['issue_ra_stuff']['issue_ra_notes']}}</textarea>
+{% else %}
+<label for="issue_ra_date">Risk Acceptance Date</label>
+<input type="text" name="issue_ra_date" id="issue_ra_date">
+<label for="issue_ra_owner">Risk Acceptance Owner</label>
+<input type="text" name="issue_ra_owner" id="issue_ra_owner">
+<label for="issue_ra_expiry">Risk Acceptance Expiry</label>
+<input type="text" name="issue_ra_expiry" id="issue_ra_expiry">
+<label for="issue_ra_notes">Risk Acceptance Notes</label>
+<textarea type="text" name="issue_ra_notes" id="issue_ra_notes"></textarea>
+{% endif %}
+<input type="hidden" name="issue_id" id="issue_id" value="{{data['_id']}}">
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Update</button>
+</div>
+</form>
+</div>
+{% endblock %}

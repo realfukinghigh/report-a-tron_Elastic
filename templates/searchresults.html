@@ -1,0 +1,191 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<link rel="stylesheet" type="text/css" href="static/main.css">
+
+{% for row in data %}
+{% if 'asset_stuff' in row['_source'] %}
+{% if 'engagement_stuff' not in row['_source'] %}
+{% if 'test_stuff' not in row['_source'] %}
+{% if 'issue_stuff' not in row['_source'] %}
+{% endif %}{% endif %}{% endif %}{% endif %}
+{% endfor %}
+<table class="tablea">
+<caption>Asset Stuff</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Doc ID</th>
+<th scope="col">Asset Type</th>
+<th scope="col">Asset Owner</th>
+<th scope="col">Created On</th>
+<th scope="col">Asset Notes</th>
+<th scope="col">Update Asset</th>
+<th scope="col">Eng Info</th>
+<th scope="col">Test Info</th>
+<th scope="col">Issue Info</th>
+<th scope="col">New Eng</th>
+</tr>
+</thead>
+{% for row in data %}
+{% if 'asset_stuff' in row['_source'] %}
+{% if 'engagement_stuff' not in row['_source'] %}
+{% if 'test_stuff' not in row['_source'] %}
+{% if 'issue_stuff' not in row['_source'] %}
+<tbody>
+<tr>
+<td data-title="asset_name">{{row['_source']['asset_stuff']['asset_name']}}</td>
+<td data-title="asset_type">{{row['_id']}}</td>
+<td data-title="asset_type">{{row['_source']['asset_stuff']['asset_type']}}</td>
+<td data-title="asset_owner">{{row['_source']['asset_stuff']['asset_owner']}}</td>
+<td data-title="asset_created_on">{{row['_source']['asset_stuff']['asset_created_on']}}</td>
+<td data-title="asset_name">{{row['_source']['asset_stuff']['asset_notes']}}</td>
+<td data-title="assetUpdate"><a class="push_button fa-update darkblue" href="{{ url_for('updateasset', asset_id=row['_id']) }}"></a></td>
+<td data-title="engInfo"><a class="push_button fa-eye darkblue" href="{{ url_for('viewengagements', asset_id=row['_id'], asset_name=row['_source']['asset_stuff']['asset_name']) }}"></a></td>
+<td data-title="viewTest"><a class="push_button fa-eye darkblue" href="{{ url_for('viewtests', asset_id=row['_id'], asset_name=row['_source']['asset_stuff']['asset_name']) }}"></a></td>
+<td data-title="issueInfo"><a class="push_button fa-eye darkblue" href="{{ url_for('viewissues', asset_id=row['_id'], asset_name=row['_source']['asset_stuff']['asset_name']) }}"></a></td>
+<td data-title="newEng"><a class="push_button fa-plus darkblue" href="{{ url_for('engagements', asset_name=row['_source']['asset_stuff']['asset_name'], asset_id=row['_id']) }}"></a></td>
+</tr>
+{% endif %}{% endif %}{% endif %}{% endif %}
+{% endfor %}
+</tbody>
+</table>
+
+{% for row in data %}
+{% if 'engagement_stuff' in row['_source'] %}
+{% if 'test_stuff' not in row['_source'] %}
+{% if 'issue_stuff' not in row['_source'] %}
+{% endif %}{% endif %}{% endif %}
+{% endfor %}
+<table class="tablea">
+<caption>Engagement Stuff</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Doc ID</th>
+<th scope="col">Engagement Form Location</th>
+<th scope="col">Main Contact</th>
+<th scope="col">Risk Rating</th>
+<th scope="col">Received On</th>
+<th scope="col">Engagement Notes</th>
+<th scope="col">Action Taken</th>
+<th scope="col">Status</th>
+<th scope="col">Update Eng</th>
+<th scope="col">View Tests</th>
+<th scope="col">New Test</th>
+</tr>
+</thead>
+{% for row in data %}
+{% if 'engagement_stuff' in row['_source'] %}
+{% if 'test_stuff' not in row['_source'] %}
+{% if 'issue_stuff' not in row['_source'] %}
+<tbody>
+<tr>
+<td scope="row" data-title="asset_name">{% if 'asset_stuff' in row['_source']  %}{{row['_source']['asset_stuff']['asset_name']}}{% else %}None{% endif %}</td>
+<td data-title="engagement_form_location">{{row['_id']}}</td>
+<td data-title="engagement_form_location">{{row['_source']['engagement_stuff']['engagement_form_location']}}</td>
+<td data-title="engagement_main_contact">{{row['_source']['engagement_stuff']['engagement_main_contact']}}</td>
+<td data-title="engagement_risk_rating">{{row['_source']['engagement_stuff']['engagement_risk_rating']}}</td>
+<td data-title="engagement_received_on">{{row['_source']['engagement_stuff']['engagement_received_on']}}</td>
+<td data-title="engagement_notes">{{row['_source']['engagement_stuff']['engagement_notes']}}</td>
+<td data-title="engagement_action_taken">{{row['_source']['engagement_stuff']['engagement_action_taken']}}</td>
+<td data-title="engStatus">{{row['_source']['engagement_stuff']['engagement_status']}}</td>
+<td data-title="updateEng"><a class="push_button fa-update darkblue" href="{{ url_for('updateEng', engagement_id=row['_id']) }}"></a></td>
+<td data-title="viewTest"><a class="push_button fa-eye darkblue" href="{{ url_for('viewtests', engagement_id=row['_id']) }}"></a></td>
+<td data-title="newTest"><a class="push_button fa-plus darkblue" href="{{ url_for('newtest', engagement_id=row['_id']) }}"></a></td>
+</tr>
+{% endif %}{% endif %}{% endif %}
+{% endfor %}
+</tbody>
+</table>
+
+{% for row in data %}
+{% if 'test_stuff' in row['_source'] %}
+{% if 'issue_stuff' not in row['_source'] %}
+{% endif %}{% endif %}
+{% endfor %}
+<table class="tablea">
+<caption>Test Stuff</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Doc ID</th>
+<th scope="col">Test Type</th>
+<th scope="col">Base Location</th>
+<th scope="col">Main Contact</th>
+<th scope="col">Created On</th>
+<th scope="col">Test Date</th>
+<th scope="col">Update Test</th>
+<th scope="col">View Issues</th>
+<th scope="col">Create Issues</th>
+<th scope="col">Write Report</th>
+</tr>
+</thead>
+{% for row in data %}
+{% if 'test_stuff' in row['_source'] %}
+{% if 'issue_stuff' not in row['_source'] %}
+<tbody>
+<tr>
+<td scope="row" data-title="asset_name">{% if 'asset_stuff' in row['_source']  %}{{row['_source']['asset_stuff']['asset_name']}}{% else %}None{% endif %}</td>
+<td data-title="doc_id">{{row['_id']}}</td>
+<td data-title="test_type">{{row['_source']['test_stuff']['test_type']}}</td>
+<td data-title="test_base_location">{{row['_source']['test_stuff']['test_base_location']}}</td>
+<td data-title="test_main_contact">{{row['_source']['test_stuff']['test_main_contact']}}</td>
+<td data-title="test_created_on">{{row['_source']['test_stuff']['test_created_on']}}</td>
+<td data-title="test_date">{{row['_source']['test_stuff']['test_date']}}</td>
+<td data-title="updatetest"><a class="push_button fa-update darkblue" href="{{ url_for('updatetest', test_id=row['_id']) }}"></a></td>
+<td data-title="viewissues"><a class="push_button fa-eye darkblue" href="{{ url_for('viewissues', test_id=row['_id']) }}"></a></td>
+<td data-title="createnewissue"><a class="push_button fa-plus darkblue" href="{{ url_for('createnewissue', test_id=row['_id']) }}"></a></td>
+<td data-title="testreport"><a class="push_button fa-file darkblue" href="{{ url_for('testreport', test_id=row['_id']) }}"></a></td>
+</tr>
+{% endif %}{% endif %}
+{% endfor %}
+</tbody>
+</table>
+
+{% for row in data %}
+{% if 'issue_stuff' in row['_source'] %}
+{% endif %}
+{% endfor %}
+<table class="tablea">
+<caption>Issue Stuff</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Doc ID</th>
+<th scope="col">Issue Title</th>
+<th scope="col">Issue Location</th>
+<th scope="col">Description</th>
+<th scope="col">Remediation</th>
+<th scope="col">Risk Rating</th>
+<th scope="col">Created On</th>
+<th scope="col">Status</th>
+<th scope="col">Update</th>
+</tr>
+</thead>
+{% for row in data %}
+{% if 'issue_stuff' in row['_source'] %}
+<tbody>
+<tr>
+<td scope="row" data-title="asset_name">{% if 'asset_stuff' in row['_source']  %}{{row['_source']['asset_stuff']['asset_name']}}{% else %}None{% endif %}</td>
+<td data-title="issue_title">{{row['_id']}}</td>
+<td data-title="issue_title">{{row['_source']['issue_stuff']['issue_title']}}</td>
+<td data-title="issue_location">{{row['_source']['issue_stuff']['issue_location']}}</td>
+<td data-title="issue_description">{{row['_source']['issue_stuff']['issue_description']}}</td>
+<td data-title="issue_remediation">{{row['_source']['issue_stuff']['issue_remediation']}}</td>
+<td data-title="issue_risk_rating">{{row['_source']['issue_stuff']['issue_risk_rating']}}</td>
+<td data-title="issue_created_on">{{row['_source']['issue_stuff']['issue_created_on']}}</td>
+<td data-title="issue_status">{{row['_source']['issue_stuff']['issue_status']}}</td>
+<td data-title="updateIssue"><a class="push_button fa-update darkblue" href="{{ url_for('updateissue', issue_id=row['_id']) }}"></a></td>
+</tr>
+{% endif %}
+{% endfor %}
+</tbody>
+</table>
+
+<p class="form_caption">Raw Data</p>
+{% for row in data %}
+<p class="search_data">{{row}}</p>
+{% endfor %}
+{% endblock %}

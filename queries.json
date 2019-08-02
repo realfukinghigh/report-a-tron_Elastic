@@ -2,10 +2,10 @@
 POST reportatron/_doc
 {
 	"asset_stuff": {
-		"asset_name": "<assetName>",
-		"asset_type": "<assetType>",
-		"asset_owner": "<assetOwner>",
-		"asset_notes": "<assetNotes>",
+		"asset_name": "<asset_name>",
+		"asset_type": "<asset_type>",
+		"asset_owner": "<asset_owner>",
+		"asset_notes": "<asset_notes>",
 		"asset_internet_facing": <1/0>
 	  }
 }
@@ -15,11 +15,11 @@ POST reportatron/_doc
 {
 	"engagement_stuff": {
 		"asset_id": "<asset _id>",
-		"engagement_form_location": "<engFormLocation>",
+		"engagement_form_location": "<engagement_form_location>",
 		"engagement_contact": "<engContact>",
 		"engagement_details": "<engDetails>",
-		"engagement_notes": "<engNotes>",
-		"engagement_rating": "<engRiskRating>",
+		"engagement_notes": "<engagement_notes>",
+		"engagement_rating": "<engengagement_risk_rating>",
 		"engagement_status": "<engStatus>"
 	  }
 }
@@ -30,10 +30,10 @@ POST reportatron/_doc
 	"test_stuff": {
 		"asset_id": "<asset _id>",
 		"engagement_id": "<engagement _id>",
-		"test_type": "<testType>",
-		"test_notes": "<testNotes>",
-		"test_date": "<testDate>",
-		"test_exec_summary": "<testExecSummary>"
+		"test_type": "<test_type>",
+		"test_notes": "<test_notes>",
+		"test_date": "<test_date>",
+		"test_exec_summary": "<testtest_exec_summary>"
 	}
 }
 

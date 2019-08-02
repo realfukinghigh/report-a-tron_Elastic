@@ -7,7 +7,7 @@ class Docs:
 	def __init__(self):
 
 		self.headers = {"Content-Type": "application/json"}
-		self.url = "http://192.168.130.135:9200/reportatron/"
+		self.url = "http://192.168.5.131:9200/reportatron/"
 		self.sess = requests.Session()
 
 	def getDoc(self, doc_id):

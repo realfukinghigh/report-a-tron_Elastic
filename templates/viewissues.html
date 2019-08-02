@@ -1,0 +1,36 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<table class="tablea">
+<caption>{% if asset_name %}{{ asset_name }}{% else %}Issue Data{% endif %}</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Issue Title</th>
+<th scope="col">Issue Location</th>
+<th scope="col">Description</th>
+<th scope="col">Remediation</th>
+<th scope="col">Risk Rating</th>
+<th scope="col">Created On</th>
+<th scope="col">Status</th>
+<th scope="col">Update</th>
+</tr>
+</thead>
+<tbody>
+{% for row in data %}
+<tr>
+<td scope="row" data-title="asset_name">{% if 'asset_stuff' in row['_source']  %}{{row['_source']['asset_stuff']['asset_name']}}{% else %}None{% endif %}</td>
+<td data-title="issue_title">{{row['_source']['issue_stuff']['issue_title']}}</td>
+<td data-title="issue_location">{{row['_source']['issue_stuff']['issue_location']}}</td>
+<td data-title="issue_description">{{row['_source']['issue_stuff']['issue_description']}}</td>
+<td data-title="issue_remediation">{{row['_source']['issue_stuff']['issue_remediation']}}</td>
+<td data-title="issue_risk_rating">{{row['_source']['issue_stuff']['issue_risk_rating']}}</td>
+<td data-title="issue_created_on">{{row['_source']['issue_stuff']['issue_created_on']}}</td>
+<td data-title="issue_status">{{row['_source']['issue_stuff']['issue_status']}}</td>
+<td data-title="updateIssue"><a class="push_button fa-update darkblue" href="{{ url_for('updateissue', issue_id=row['_id']) }}"></a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

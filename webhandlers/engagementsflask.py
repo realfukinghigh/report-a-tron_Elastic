@@ -6,25 +6,25 @@ docConnection = singledocs.Docs()
 engagementConnection = engagements.Engagements()
 
 def engagements():
-	_assetName = request.args.get('assetName')
-	_assetID = request.args.get('assetID')
-	if _assetName:
-		return render_template("engagements.html", assetName=_assetName, assetID=_assetID)
+	asset_name = request.args.get('asset_name')
+	asset_id = request.args.get('asset_id')
+	if asset_name:
+		return render_template("engagements.html", asset_name=asset_name, asset_id=asset_id)
 	else:
 		return render_template("engagements.html")
 
 def newengagement():
-	_assetID = request.form['assetID']
-	_engformLocation = request.form['engformLocation']
-	_mainContact = request.form['mainContact']
-	_riskRating = request.form['riskRating']
-	_receivedOn = request.form['receivedOn']
-	_actionTaken = request.form['actionTaken']
-	_engNotes = request.form['engNotes']
-	if _assetID:
+	asset_id = request.form['asset_id']
+	engagement_form_location = request.form['engagement_form_location']
+	engagement_main_contact = request.form['engagement_main_contact']
+	engagement_risk_rating = request.form['engagement_risk_rating']
+	engagement_received_on = request.form['engagement_received_on']
+	engagement_action_taken = request.form['engagement_action_taken']
+	engagement_notes = request.form['engagement_notes']
+	if asset_id:
 		try:
 			timenow = datetime.datetime.now().isoformat().split(".")[0]
-			engagementConnection.createEngagement(_assetID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
+			engagementConnection.createEngagement(asset_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes)
 			return redirect(url_for("viewengagements"))
 		except:
 			return redirect(url_for("error"))
@@ -32,7 +32,7 @@ def newengagement():
 	else:
 		try:
 			timenow = datetime.datetime.now().isoformat().split(".")[0]
-			engagementConnection.createEngagement(None,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes)
+			engagementConnection.createEngagement(None,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes)
 			return redirect(url_for("viewengagements"))
 		except:
 			return redirect(url_for("error"))
@@ -42,31 +42,31 @@ def openengagements():
 	return render_template('viewengagements.html', data=data)
 
 def viewengagements():
-	assetID = request.args.get('assetID')
-	assetName = request.args.get('assetName')
-	if assetID:
-		data = engagementConnection.getEngagementsForAsset(assetID)
-		return render_template('viewengagements.html', data=data, assetName=assetName)
+	asset_id = request.args.get('asset_id')
+	asset_name = request.args.get('asset_name')
+	if asset_id:
+		data = engagementConnection.getEngagementsForAsset(asset_id)
+		return render_template('viewengagements.html', data=data, asset_name=asset_name)
 	else:
 		data = engagementConnection.getEngagements()
 		return render_template('viewengagements.html', data=data)
 
 def updateEng():
-	_engID = request.args.get('engID')
-	data = docConnection.getDoc(_engID)
+	engagement_id = request.args.get('engagement_id')
+	data = docConnection.getDoc(engagement_id)
 	return render_template('updateeng.html', data=data)
 
 def updateengagement():
-	_engID = request.form['engId']
-	_engformLocation = request.form['engformLocation']
-	_mainContact = request.form['mainContact']
-	_riskRating = request.form['riskRating']
-	_receivedOn = request.form['receivedOn']
-	_actionTaken = request.form['actionTaken']
-	_engNotes = request.form['engNotes']
+	engagement_id = request.form['engagement_id']
+	engagement_form_location = request.form['engagement_form_location']
+	engagement_main_contact = request.form['engagement_main_contact']
+	engagement_risk_rating = request.form['engagement_risk_rating']
+	engagement_received_on = request.form['engagement_received_on']
+	engagement_action_taken = request.form['engagement_action_taken']
+	engagement_notes = request.form['engagement_notes']
 	_engStatus = request.form['engStatus']
 	try:
-		engagementConnection.updateEngagement(_engID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes,_engStatus)
+		engagementConnection.updateEngagement(engagement_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes,_engStatus)
 		return redirect(url_for("viewengagements"))
 	except:
 		return redirect(url_for("error"))

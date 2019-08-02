@@ -24,6 +24,13 @@ p.form_caption {
 	color: #000;
 }
 
+p.search_data {
+	font-size: 13px;
+	padding-left: 50px;
+	padding-right: 50px;
+	color: #000;
+}
+
 div.title_page {
     border-radius: 5px;
     background-color: #56677f;
@@ -72,7 +79,7 @@ input[type=text] {
 .search-container {
 	float: right;
 	margin-top: 20px;
-	
+
 }
 
 .search-container button {
@@ -90,8 +97,41 @@ input[type=text] {
   background: #ccc;
 }
 
+.search-container .tool-tip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  right: 300px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.search-container .tool-tip-text::after {
+  content: "";
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.search-container:hover .tool-tip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 @media screen and (max-width: 600px) {
-	
+
   .topnav a, .topnav input[type=text], .topnav .search-container button {
     float: none;
     display: block;
@@ -101,6 +141,6 @@ input[type=text] {
     padding: 14px;
   }
   .topnav input[type=text] {
-    border: 1px solid #ccc;  
+    border: 1px solid #ccc;
   }
 }

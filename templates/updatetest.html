@@ -5,21 +5,21 @@
 <p class="form_caption">Test Update - ID: {{data['_id']}}</p>
 <div class="forms">
 <form class="entry_form" action="/updatetestapi" method="post">
-<label for="testType">Test Type</label>
-<input type="text" name="testType" id="testType" value="{{data['_source']['test_stuff']['test_type']}}" required autofocus>
-<label for="execSummary">Executive Summary</label>
-<textarea type="text" name="execSummary" id="execSummary" required>{{data['_source']['test_stuff']['test_exec_summary']}}</textarea>
-<label for="baseLocation">Base Location</label>
-<input type="text" name="baseLocation" id="baseLocation" value="{{data['_source']['test_stuff']['test_base_location']}}" required>
-<label for="limitations">Limitations</label>
-<input type="text" name="limitations" id="limitations" value="{{data['_source']['test_stuff']['test_limitations']}}" required>
-<label for="mainContact">Main Contact</label>
-<input type="text" name="mainContact" id="mainContact" value="{{data['_source']['test_stuff']['test_main_contact']}}" required>
-<label for="testDate">Test Date</label>
-<input type="text" name="testDate" id="testDate" value="{{data['_source']['test_stuff']['test_date']}}">
-<label for="testNotes">Test Notes</label>
-<textarea type="text" name="testNotes" id="testNotes">{{data['_source']['test_stuff']['test_notes']}}</textarea>
-<input type="hidden" name="testId" id="testId" value="{{data['_id']}}">
+<label for="test_type">Test Type</label>
+<input type="text" name="test_type" id="test_type" value="{{data['_source']['test_stuff']['test_type']}}" required autofocus>
+<label for="test_exec_summary">Executive Summary</label>
+<textarea type="text" name="test_exec_summary" id="test_exec_summary" required>{{data['_source']['test_stuff']['test_exec_summary']}}</textarea>
+<label for="test_base_location">Base Location</label>
+<input type="text" name="test_base_location" id="test_base_location" value="{{data['_source']['test_stuff']['test_base_location']}}" required>
+<label for="test_limitations">Test Limitations</label>
+<input type="text" name="test_limitations" id="test_limitations" value="{{data['_source']['test_stuff']['test_limitations']}}" required>
+<label for="test_main_contact">Main Contact</label>
+<input type="text" name="test_main_contact" id="test_main_contact" value="{{data['_source']['test_stuff']['test_main_contact']}}" required>
+<label for="test_date">Test Date</label>
+<input type="text" name="test_date" id="test_date" value="{{data['_source']['test_stuff']['test_date']}}">
+<label for="test_notes">Test Notes</label>
+<textarea type="text" name="test_notes" id="test_notes">{{data['_source']['test_stuff']['test_notes']}}</textarea>
+<input type="hidden" name="test_id" id="test_id" value="{{data['_id']}}">
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Update</button>
 </div>

@@ -5,17 +5,17 @@
 <p class="form_caption">Asset Update - ID: {{data['_id']}}</p>
 <div class="forms">
 <form class="entry_form" action="/updateassetapi" method="post">
-<label for="assetName">Asset Name</label>
-<input type="text" name="assetName" id="assetName" value="{{data['_source']['asset_stuff']['asset_name']}}">
-<label for="assetType">Asset Type</label>
-<input type="text" name="assetType" id="assetType" value="{{data['_source']['asset_stuff']['asset_type']}}">
-<label for="assetOwner">Asset Owner</label>
-<input type="text" name="assetOwner" id="assetOwner" value="{{data['_source']['asset_stuff']['asset_owner']}}">
-<label for="assetNotes">Asset Notes</label>
-<textarea type="text" name="assetNotes" id="assetNotes">{{data['_source']['asset_stuff']['asset_notes']}}</textarea>
-<label for="assetInternetFacing">Asset Internet Facing</label>
-<input type="number" name="assetInternetFacing" id="assetInternetFacing" value="{{data['_source']['asset_stuff']['asset_internet_facing']}}">
-<input type="hidden" name="assetId" id="assetId" value="{{data['_id']}}">
+<label for="asset_name">Asset Name</label>
+<input type="text" name="asset_name" id="asset_name" value="{{data['_source']['asset_stuff']['asset_name']}}">
+<label for="asset_type">Asset Type</label>
+<input type="text" name="asset_type" id="asset_type" value="{{data['_source']['asset_stuff']['asset_type']}}">
+<label for="asset_owner">Asset Owner</label>
+<input type="text" name="asset_owner" id="asset_owner" value="{{data['_source']['asset_stuff']['asset_owner']}}">
+<label for="asset_notes">Asset Notes</label>
+<textarea type="text" name="asset_notes" id="asset_notes">{{data['_source']['asset_stuff']['asset_notes']}}</textarea>
+<label for="asset_internet_facing">Asset Internet Facing</label>
+<input type="number" name="asset_internet_facing" id="asset_internet_facing" value="{{data['_source']['asset_stuff']['asset_internet_facing']}}">
+<input type="hidden" name="asset_id" id="asset_id" value="{{data['_id']}}">
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Update</button>
 </div>

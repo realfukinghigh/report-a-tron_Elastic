@@ -17,9 +17,9 @@ def getAssets():
 	
 	return data
 	
-def createAsset(_assetName, _assetType, _assetOwner, timenow, _assetNotes, _assetInternetFacing):
+def createAsset(asset_name, _asset_type, asset_owner, timenow, _asset_notes, asset_internet_facing):
 
-	body = json.dumps({"asset_stuff": {"asset_name": _assetName, "asset_type": _assetType, "asset_owner": _assetOwner, "asset_created_on": timenow, "asset_notes": _assetNotes, "asset_internet_facing": _assetInternetFacing}})
+	body = json.dumps({"asset_stuff": {"asset_name": asset_name, "asset_type": _asset_type, "asset_owner": asset_owner, "asset_created_on": timenow, "asset_notes": _asset_notes, "asset_internet_facing": asset_internet_facing}})
 	
 	sender = requests.post(url + "_doc", data=body, headers=headers)
 	if sender.status_code != 201: 
@@ -59,13 +59,13 @@ def getEngagementsForAsset(asset_id):
 	
 	return data
 
-def createNewTest(eng_id,test_type,exec_summary,base_location,limitations,main_contact,created_on,test_date,test_notes):
+def createNewTest(eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes):
 
-	sqlCreateNewTest = "INSERT INTO tests(eng_id,test_type,exec_summary,base_location,limitations,main_contact,created_on,test_date,test_notes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+	sqlCreateNewTest = "INSERT INTO tests(eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 	try:
 		conn = psycopg2.connect("dbname=reportatron user=webapp password=<password>")
 		cur = conn.cursor()
-		cur.execute(sqlCreateNewTest, (eng_id,test_type,exec_summary,base_location,limitations,main_contact,created_on,test_date,test_notes,))
+		cur.execute(sqlCreateNewTest, (eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes,))
 		conn.commit()
 		cur.close()
 	except (Exception, psycopg2.DatabaseError) as error:
@@ -89,20 +89,20 @@ def getDocument(doc_id):
 	
 	return data
 	
-def updateEngagement(_engID,_engformLocation,_mainContact,_riskRating,_receivedOn,_actionTaken,_engNotes,_engStatus):
+def updateEngagement(engagement_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes,_engStatus):
 	
-	body = json.dumps({"doc": {"engagement_stuff" : {"engagement_form_location": _engformLocation, "engagement_main_contact": _mainContact, "engagement_risk_rating": _riskRating, "engagement_received_on": _receivedOn, "engagement_action_taken": _actionTaken, "engagement_notes": _engNotes, "engagement_status": _engStatus}}})
+	body = json.dumps({"doc": {"engagement_stuff" : {"engagement_form_location": engagement_form_location, "engagement_main_contact": engagement_main_contact, "engagement_risk_rating": engagement_risk_rating, "engagement_received_on": engagement_received_on, "engagement_action_taken": engagement_action_taken, "engagement_notes": engagement_notes, "engagement_status": _engStatus}}})
 	
-	sender = requests.post(url + "_update/" + _engID, headers=headers, data=body)
+	sender = requests.post(url + "_update/" + engagement_id, headers=headers, data=body)
 	print(sender.json())
 	if sender.status_code != 200: 
 		raise ReferenceError('update failed')
 		
-def updateAsset(_assetID, _assetName, _assetType, _assetOwner, _assetNotes, _assetInternetFacing): 
+def updateAsset(asset_id, asset_name, _asset_type, asset_owner, _asset_notes, asset_internet_facing): 
 
-	body = json.dumps({"doc": {"asset_stuff" : {"asset_name": _assetName, "asset_type": _assetType, "asset_owner": _assetOwner, "asset_notes": _assetNotes, "asset_internet_facing": _assetInternetFacing}}})
+	body = json.dumps({"doc": {"asset_stuff" : {"asset_name": asset_name, "asset_type": _asset_type, "asset_owner": asset_owner, "asset_notes": _asset_notes, "asset_internet_facing": asset_internet_facing}}})
 	
-	sender = requests.post(url + "_update/" + _assetID, headers=headers, data=body)
+	sender = requests.post(url + "_update/" + asset_id, headers=headers, data=body)
 	print(sender.json())
 	print(sender.status_code)
 	if sender.status_code != 200: 
@@ -328,14 +328,14 @@ def getAllIssueData():
 		cur.close()
 		raise
 
-def updateSingleIssue(issueTitle,riskRating,riskImpact,riskLikelihood,location,issueStatus,description,remediation,issueDetails,issueNotes,issueRADate,issueRAOwner,issueRAExpiry,issueRANotes,issueID):
+def updateSingleIssue(issueTitle,engagement_risk_rating,riskImpact,riskLikelihood,location,issueStatus,description,remediation,issueDetails,issueNotes,issueRADate,issueRAOwner,issueRAExpiry,issueRANotes,issueID):
 
 	if issueRADate != "None": 
 		sqlIssueUpdate = "UPDATE issues SET issue_title = %s, risk_rating = %s, risk_impact = %s, risk_likelihood = %s, issue_location = %s, issue_status = %s, issue_description = %s, remediation = %s, issue_details = %s, issue_notes = %s, issue_ra_date = %s, issue_ra_owner = %s, issue_ra_expiry, issue_ra_notes = %s WHERE issue_id = %s"
 		try:
 			conn = psycopg2.connect("dbname=reportatron user=webapp password=<password>")
 			cur = conn.cursor()
-			cur.execute(sqlIssueUpdate, (issueTitle,riskRating,riskImpact,riskLikelihood,location,issueStatus,description,remediation,issueDetails,issueNotes,issueRADate,issueRAOwner,issueRAExpiry,issueRANotes,issueID,))
+			cur.execute(sqlIssueUpdate, (issueTitle,engagement_risk_rating,riskImpact,riskLikelihood,location,issueStatus,description,remediation,issueDetails,issueNotes,issueRADate,issueRAOwner,issueRAExpiry,issueRANotes,issueID,))
 			conn.commit()
 			cur.close()
 		except (Exception, psycopg2.DatabaseError) as error:
@@ -348,7 +348,7 @@ def updateSingleIssue(issueTitle,riskRating,riskImpact,riskLikelihood,location,i
 		try:
 			conn = psycopg2.connect("dbname=reportatron user=webapp password=<password>")
 			cur = conn.cursor()
-			cur.execute(sqlIssueUpdate, (issueTitle,riskRating,riskImpact,riskLikelihood,location,issueStatus,description,remediation,issueDetails,issueNotes,issueRAOwner,issueRANotes,issueID,))
+			cur.execute(sqlIssueUpdate, (issueTitle,engagement_risk_rating,riskImpact,riskLikelihood,location,issueStatus,description,remediation,issueDetails,issueNotes,issueRAOwner,issueRANotes,issueID,))
 			conn.commit()
 			cur.close()
 		except (Exception, psycopg2.DatabaseError) as error:
@@ -389,14 +389,14 @@ def getTestDataForReport(test_id):
 		cur.close()
 		raise
 
-def getAssetIdFromTitle(asset_name):
+def getasset_idFromTitle(asset_name):
 
-	sqlAssetID = "SELECT asset_id FROM assets WHERE asset_name LIKE %s"
+	sqlasset_id = "SELECT asset_id FROM assets WHERE asset_name LIKE %s"
 
 	try:
 		conn = psycopg2.connect("dbname=reportatron user=webapp password=<password>")
 		cur = conn.cursor(cursor_factory=RealDictCursor)
-		cur.execute(sqlAssetID, (asset_name,))
+		cur.execute(sqlasset_id, (asset_name,))
 		data = cur.fetchall()
 		cur.close()
 		return data
@@ -405,7 +405,7 @@ def getAssetIdFromTitle(asset_name):
 		cur.close()
 		raise
 		
-def getAssetIdFromSearch(asset_name):
+def getasset_idFromSearch(asset_name):
 
 	sqlAssetSearch = "SELECT * FROM assets WHERE asset_name ~* %s"
 

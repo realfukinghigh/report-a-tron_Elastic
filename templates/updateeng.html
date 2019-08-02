@@ -5,21 +5,21 @@
 <p class="form_caption">Engagement Update - ID: {{data['_id']}}</p>
 <div class="forms">
 <form class="entry_form" action="/updateengagement" method="post">
-<label for="engformLocation">Engagement Form Location</label>
-<input type="text" name="engformLocation" id="engformLocation" value="{{data['_source']['engagement_stuff']['engagement_form_location']}}">
-<label for="mainContact">Main Contact</label>
-<input type="text" name="mainContact" id="mainContact" value="{{data['_source']['engagement_stuff']['engagement_main_contact']}}">
-<label for="riskRating">Risk Rating</label>
-<input type="text" name="riskRating" id="riskRating" value="{{data['_source']['engagement_stuff']['engagement_risk_rating']}}">
-<label for="receivedOn">Received On</label>
-<input type="text" name="receivedOn" id="receivedOn" value="{{data['_source']['engagement_stuff']['engagement_received_on']}}">
-<label for="actionTaken">Action Taken</label>
-<textarea type="text" name="actionTaken" id="actionTaken">{{data['_source']['engagement_stuff']['engagement_action_taken']}}</textarea>
-<label for="engNotes">Engagement Notes</label>
-<textarea type="text" name="engNotes" id="engNotes">{{data['_source']['engagement_stuff']['engagement_notes']}}</textarea>
+<label for="engagement_form_location">Engagement Form Location</label>
+<input type="text" name="engagement_form_location" id="engagement_form_location" value="{{data['_source']['engagement_stuff']['engagement_form_location']}}">
+<label for="engagement_main_contact">Main Contact</label>
+<input type="text" name="engagement_main_contact" id="engagement_main_contact" value="{{data['_source']['engagement_stuff']['engagement_main_contact']}}">
+<label for="engagement_risk_rating">Risk Rating</label>
+<input type="text" name="engagement_risk_rating" id="engagement_risk_rating" value="{{data['_source']['engagement_stuff']['engagement_risk_rating']}}">
+<label for="engagement_received_on">Received On</label>
+<input type="text" name="engagement_received_on" id="engagement_received_on" value="{{data['_source']['engagement_stuff']['engagement_received_on']}}">
+<label for="engagement_action_taken">Action Taken</label>
+<textarea type="text" name="engagement_action_taken" id="engagement_action_taken">{{data['_source']['engagement_stuff']['engagement_action_taken']}}</textarea>
+<label for="engagement_notes">Engagement Notes</label>
+<textarea type="text" name="engagement_notes" id="engagement_notes">{{data['_source']['engagement_stuff']['engagement_notes']}}</textarea>
 <label for "engStatus">Engagement Status</label>
 <input type="text" name="engStatus" id="engStatus" value="{{data['_source']['engagement_stuff']['engagement_status']}}">
-<input type="hidden" name="engId" id="engID" value="{{data['_id']}}">
+<input type="hidden" name="engagement_id" id="engagement_id" value="{{data['_id']}}">
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Update</button>
 </div>

@@ -2,25 +2,25 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="static/forms.css">
 <link rel="stylesheet" type="text/css" href="static/buttons.css">
-<p class="form_caption">{{ assetName }}</p>
+<p class="form_caption">{{ asset_name }}</p>
 <div class="forms">
 <form class="entry_form" action="/createtest" method="post">
-<label for="testType">Test Type</label>
-<input type="text" name="testType" id="testType" required autofocus>
-<label for="execSummary">Executive Summary</label>
-<textarea type="text" name="execSummary" id="execSummary" required></textarea>
-<label for="baseLocation">Base Location</label>
-<input type="text" name="baseLocation" id="baseLocation" required>
-<label for="limitations">Limitations</label>
-<input type="text" name="limitations" id="limitations" required>
-<label for="mainContact">Main Contact</label>
-<input type="text" name="mainContact" id="mainContact" required>
-<label for="testDate">Test Date</label>
-<input type="text" name="testDate" id="testDate">
-<label for="testNotes">Test Notes</label>
-<textarea type="text" name="testNotes" id="testNotes"></textarea>
-<input type="hidden" name="assetID" id="assetID" value="{{ assetID }}">
-<input type="hidden" name="engID" id="engID" value="{{ engID }}">
+<label for="test_type">Test Type</label>
+<input type="text" name="test_type" id="test_type" required autofocus>
+<label for="test_exec_summary">Executive Summary</label>
+<textarea type="text" name="test_exec_summary" id="test_exec_summary" required></textarea>
+<label for="test_base_location">Base Location</label>
+<input type="text" name="test_base_location" id="test_base_location" required>
+<label for="test_limitations">Test Limitations</label>
+<input type="text" name="test_limitations" id="test_limitations" required>
+<label for="test_main_contact">Main Contact</label>
+<input type="text" name="test_main_contact" id="test_main_contact" required>
+<label for="test_date">Test Date</label>
+<input type="text" name="test_date" id="test_date">
+<label for="test_notes">Test Notes</label>
+<textarea type="text" name="test_notes" id="test_notes"></textarea>
+<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">
+<input type="hidden" name="engagement_id" id="engagement_id" value="{{ engagement_id }}">
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Submit Data</button>
 </div>
