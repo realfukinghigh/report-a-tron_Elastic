@@ -15,6 +15,7 @@
 <th scope="col">Created On</th>
 <th scope="col">Status</th>
 <th scope="col">Update</th>
+<th scope="col">Link Issue</th>
 </tr>
 </thead>
 <tbody>
@@ -29,6 +30,7 @@
 <td data-title="issue_created_on">{{row['_source']['issue_stuff']['issue_created_on']}}</td>
 <td data-title="issue_status">{{row['_source']['issue_stuff']['issue_status']}}</td>
 <td data-title="updateIssue"><a class="push_button fa-update darkblue" href="{{ url_for('updateissue', issue_id=row['_id']) }}"></a></td>
+<td data-title="linkIssue"><a class="push_button fa-update darkblue" href="{{ url_for('linkissue', issue_id=row['_id']) }}"></a></td>
 </tr>
 {% endfor %}
 </tbody>

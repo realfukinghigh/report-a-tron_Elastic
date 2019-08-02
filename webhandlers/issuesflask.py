@@ -1,24 +1,27 @@
 from flask import Flask, render_template, request, redirect, url_for
 import datetime
-from elasticstuff import singledocs, issues
+from elasticstuff import singledocs, issues, assets
 
 docConnection = singledocs.Docs()
 issueConnection = issues.Issues()
 
 def viewissues():
-	engagement_id = request.args.get('engagement_id')
-	asset_id = request.args.get('asset_id')
-	test_id = request.args.get('test_id')
-	asset_name = request.args.get('asset_name')
-	if test_id:
-		data = dbstuff.getIssuesForTest(test_id)
-		return render_template('viewissues.html', data=data)
-	if asset_id:
-		data = dbstuff.getIssuesForAsset(asset_id)
-		return render_template('viewissues.html', data=data, asset_name=asset_name)
-	else:
-		data = issueConnection.getIssues()
-		return render_template('viewissues.html', data=data)
+    engagement_id = request.args.get('engagement_id')
+    asset_id = request.args.get('asset_id')
+    test_id = request.args.get('test_id')
+    asset_name = request.args.get('asset_name')
+    if test_id:
+        data = issueConnection.getIssuesFilter({"test_id": test_id})
+        return render_template('viewissues.html', data=data)
+    if asset_id:
+        data = issueConnection.getIssuesFilter({"asset_id": asset_id})
+        return render_template('viewissues.html', data=data)
+    if engagement_id:
+        data = issueConnection.getIssuesFilter({"engagement_id": engagement_id})
+        return render_template('viewissues.html', data=data)
+    else:
+        data = issueConnection.getIssues()
+        return render_template('viewissues.html', data=data)
 
 def createnewissue():
 	asset_id = request.args.get('asset_id')
@@ -79,3 +82,21 @@ def updateissueapi():
 		return redirect(url_for("viewissues"))
 	except:
 		return redirect(url_for("error"))
+
+def linkissue():
+	issue_id = request.args.get('issue_id')
+	try:
+		data = assets.Assets().getAssets()
+		return render_template("linkissue.html", data=data, issue_id=issue_id)
+	except:
+		return render_template("linkissue.html", issue_id=issue_id)
+
+def issuelinkapi():
+    asset_id = request.form['asset_id']
+    issue_id = request.form['issue_id']
+    print(asset_id, issue_id)
+    try:
+        issueConnection.createLink(asset_id, issue_id)
+        return redirect(url_for("viewissues"))
+    except:
+        return redirect(url_for("error"))

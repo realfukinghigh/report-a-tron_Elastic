@@ -124,22 +124,18 @@ def updateissueapi():
 
 @app.route("/linkissue", methods=['GET'])
 def linkissue():
-	issueID = request.args.get('issueID')
-	try:
-		data = dbstuff.getAllAssetTableData()
-		return render_template("linkissue.html", data=data, issueID=issueID)
-	except:
-		return render_template("linkissue.html", issueID=issueID)
+	return issuesflask.linkissue()
 
-@app.route("/addissuelink", methods=['POST'])
-def addissuelink():
-	asset_id = request.form['asset_id']
-	_issueID = request.form['issueID']
-	try:
-		dbstuff.createAssetIssueLink(asset_id, _issueID)
-		return redirect(url_for("viewissues"))
-	except:
-		return redirect(url_for("error"))
+@app.route("/issuelinkapi", methods=['POST'])
+def issuelinkapi():
+	return issuesflask.issuelinkapi()
+#	asset_id = request.form['asset_id']
+#	_issueID = request.form['issueID']
+#	try:
+#		dbstuff.createAssetIssueLink(asset_id, _issueID)
+#		return redirect(url_for("viewissues"))
+#	except:
+#		return redirect(url_for("error"))
 
 
 

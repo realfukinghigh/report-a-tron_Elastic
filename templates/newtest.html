@@ -19,8 +19,8 @@
 <input type="text" name="test_date" id="test_date">
 <label for="test_notes">Test Notes</label>
 <textarea type="text" name="test_notes" id="test_notes"></textarea>
-<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">
-<input type="hidden" name="engagement_id" id="engagement_id" value="{{ engagement_id }}">
+{% if asset_id %}<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">{% else %}<input type="hidden" name="asset_id" id="asset_id" value="">{% endif %}
+{% if engagement_id %}<input type="hidden" name="engagement_id" id="engagement_id" value="{{ engagement_id }}">{% else %}<input type="hidden" name="engagement_id" id="engagement_id" value="">{% endif %}
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Submit Data</button>
 </div>

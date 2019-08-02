@@ -17,8 +17,8 @@
 <textarea type="text" name="engagement_action_taken" id="engagement_action_taken"></textarea>
 <label for="engagement_notes">Engagement Notes</label>
 <textarea type="text" name="engagement_notes" id="engagement_notes"></textarea>
-{% if asset_id %}<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">{% else %}<input type="hidden" name="asset_id" id="asset_id" value="">
-<div class="button_frame">{% endif %}
+{% if asset_id %}<input type="hidden" name="asset_id" id="asset_id" value="{{ asset_id }}">{% else %}<input type="hidden" name="asset_id" id="asset_id" value="">{% endif %}
+<div class="button_frame">
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Submit Data</button>
 </div>

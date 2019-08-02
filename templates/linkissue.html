@@ -1,0 +1,35 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<p class="form_caption">Link an Issue to an Asset</p>
+<div class="forms">
+<form class="entry_form" action="/issuelinkapi" method="post">
+<label for="asset_id">Asset ID</label>
+<input type="text" name="asset_id" id="asset_id" autofocus>
+<label for="issue_id">Issue ID</label>
+<input type="text" name="issue_id" id="issue_id" value="{{ issue_id }}">
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Submit Data</button>
+</div>
+</form>
+</div>
+<table class="tablea">
+<caption>Asset Data</caption>
+<thead>
+<tr>
+<th scope="col">Asset ID</th>
+<th scope="col">Asset Name</th>
+</tr>
+</thead>
+<tbody>
+{% for row in data %}
+<tr>
+<td scope="row" data-title="issue_id">{{row['_id']}}</td>
+<td data-title="asset_name">{{row['_source']['asset_stuff']['asset_name']}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

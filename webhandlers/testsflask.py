@@ -15,17 +15,17 @@ def createtest():
 	test_type = request.form['test_type']
 	test_exec_summary = request.form['test_exec_summary']
 	test_base_location = request.form['test_base_location']
-	test_test_limitations = request.form['test_limitations']
-	engagement_main_contact = request.form['engagement_main_contact']
+	test_limitations = request.form['test_limitations']
+	test_main_contact = request.form['test_main_contact']
 	test_date = request.form['test_date']
 	test_notes = request.form['test_notes']
 	try:
 		timenow = datetime.datetime.now().isoformat().split(".")[0]
 
 		if engagement_id:
-			testConnection.createTest(engagement_id,test_type,test_exec_summary,test_base_location,test_test_limitations,engagement_main_contact,timenow,test_date,test_notes)
+			testConnection.createTest(engagement_id,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
 		else:
-			testConnection.createTest(None,test_type,test_exec_summary,test_base_location,test_test_limitations,engagement_main_contact,timenow,test_date,test_notes)
+			testConnection.createTest(None,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
 
 		return redirect(url_for("viewtests"))
 	except:
@@ -54,12 +54,12 @@ def updatetestapi():
 	test_type = request.form['test_type']
 	test_exec_summary = request.form['test_exec_summary']
 	test_base_location = request.form['test_base_location']
-	test_test_limitations = request.form['test_limitations']
+	test_limitations = request.form['test_limitations']
 	engagement_main_contact = request.form['engagement_main_contact']
 	test_date = request.form['test_date']
 	test_notes = request.form['test_notes']
 	try:
-		testConnection.updateTest(test_id,test_type,test_exec_summary,test_base_location,test_test_limitations,engagement_main_contact,test_date,test_notes)
+		testConnection.updateTest(test_id,test_type,test_exec_summary,test_base_location,test_limitations,engagement_main_contact,test_date,test_notes)
 		return redirect(url_for("viewtests"))
 	except:
 		return redirect(url_for("error"))
