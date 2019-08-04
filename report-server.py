@@ -6,8 +6,8 @@ import requests
 import markdown
 import configparser
 import elasticstuffa
-from elasticstuff import assets, singledocs, engagements, tests, search
-from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask
+from elasticstuff import assets, singledocs, engagements, tests, search, thirdparty
+from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask
 #import reportWriter
 #import theStatMachine as stat
 
@@ -219,7 +219,7 @@ def search():
 
 @app.route("/viewthirdparty")
 def viewthirdparty():
-	return tpConnection.getThirdParty()
+	return thirdpartyflask.viewthirdparty()
 #	data = dbstuff.getAllThirdPartyData()
 #	return render_template('viewthirdparty.html', data=data)
 
