@@ -12,7 +12,7 @@ class Assets:
 
 	def getAssets(self):
 
-		body = json.dumps({"size": 10000, "query": {"bool": {"must_not": [{"exists": {"field": "engagement_stuff"}}, {"exists": {"field": "test_stuff"}}, {"exists": {"field": "issue_stuff"}}, {"exists": {"field": "third_party_stuff"}}]}}})
+		body = json.dumps({"size": 10000, "query": {"bool": {"must_not": [{"exists": {"field": "engagement_stuff"}}, {"exists": {"field": "test_stuff"}}, {"exists": {"field": "issue_stuff"}}]}}})
 
 		sender = self.sess.get(self.url + "_search", data=body, headers=self.headers)
 		data = sender.json()['hits']['hits']
@@ -27,6 +27,8 @@ class Assets:
 
 		if sender.status_code != 201:
 			raise ReferenceError('asset not created')
+
+		return sender.json()
 
 	def updateAsset(self, asset_id, asset_name, asset_type, asset_owner, asset_notes, asset_internet_facing):
 

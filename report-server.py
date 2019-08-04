@@ -219,8 +219,9 @@ def search():
 
 @app.route("/viewthirdparty")
 def viewthirdparty():
-	data = dbstuff.getAllThirdPartyData()
-	return render_template('viewthirdparty.html', data=data)
+	return tpConnection.getThirdParty()
+#	data = dbstuff.getAllThirdPartyData()
+#	return render_template('viewthirdparty.html', data=data)
 
 @app.route("/createthirdparty")
 def createthirdparty():

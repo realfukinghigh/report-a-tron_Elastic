@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
 import datetime
-from elasticstuff import assets, singledocs
+from elasticstuff import assets, singledocs, thirdparty
 
 assetConnection = assets.Assets()
 docConnection = singledocs.Docs()
+tpConnection = thirdparty.Thirdparty()
 
 def newapp():
    return render_template('newapp.html')
@@ -19,9 +20,14 @@ def createapp():
 	asset_notes = request.form['asset_notes']
 	asset_internet_facing = request.form['asset_internet_facing']
 	try:
-		timenow = datetime.datetime.now().isoformat().split(".")[0]
-		assetConnection.createAsset(asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
+        timenow = datetime.datetime.now().isoformat().split(".")[0]
+        data = assetConnection.createAsset(asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
+
+        if asset_type == "Third Party":
+            tpConnection.createThirdParty(data['_id'], asset_id, asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
+
 		return redirect(url_for("thedata"))
+
 	except:
 		return redirect(url_for("error"))
 
