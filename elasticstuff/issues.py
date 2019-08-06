@@ -6,7 +6,7 @@ class Issues:
     def __init__(self):
 
         self.headers = {"Content-Type": "application/json"}
-        self.url = "http://192.168.5.131:9200/reportatron/"
+        self.url = "http://192.168.196.129:9200/reportatron/"
         self.sess = requests.Session()
 
     def getIssues(self):
@@ -53,7 +53,7 @@ class Issues:
 
             return data
 
-    def createNewIssue(self, test_id, issue_title, issue_location, issue_description, issue_remediation, issue_risk_rating, issue_risk_impact, issue_risk_likelihood, issue_status, issue_details, issue_notes, timenow):
+    def createissue(self, test_id, issue_title, issue_location, issue_description, issue_remediation, issue_risk_rating, issue_risk_impact, issue_risk_likelihood, issue_status, issue_details, issue_notes, timenow):
 
         if test_id:
             requestor = self.sess.get(self.url + "_doc/" + test_id, headers=self.headers)

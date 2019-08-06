@@ -7,7 +7,7 @@ class Tests:
 	def __init__(self):
 
 		self.headers = {"Content-Type": "application/json"}
-		self.url = "http://192.168.5.131:9200/reportatron/"
+		self.url = "http://192.168.196.129:9200/reportatron/"
 		self.sess = requests.Session()
 
 	def getTests(self):
@@ -18,7 +18,7 @@ class Tests:
 
 		return data
 
-	def createTest(self, engagement_id, test_type, test_exec_summary, test_base_location, test_limitations, test_main_contact, test_created_on, test_date, test_notes):
+	def createtestapi(self, engagement_id, test_type, test_exec_summary, test_base_location, test_limitations, test_main_contact, test_created_on, test_date, test_notes):
 
 		if engagement_id:
 			requestor = self.sess.get(self.url + "_doc/" + engagement_id, headers=self.headers)

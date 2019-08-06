@@ -7,7 +7,7 @@ class Engagements:
 	def __init__(self):
 
 		self.headers = {"Content-Type": "application/json"}
-		self.url = "http://192.168.5.131:9200/reportatron/"
+		self.url = "http://192.168.196.129:9200/reportatron/"
 		self.sess = requests.Session()
 
 	def getEngagements(self):
@@ -43,7 +43,7 @@ class Engagements:
 
 		return data
 
-	def updateEngagement(self, engagement_id, engagement_form_location, engagement_main_contact, engagement_risk_rating, engagement_received_on, engagement_action_taken,  engagement_notes, engagement_status):
+	def updateengagementapi(self, engagement_id, engagement_form_location, engagement_main_contact, engagement_risk_rating, engagement_received_on, engagement_action_taken,  engagement_notes, engagement_status):
 
 		body = json.dumps({"doc": {"engagement_stuff": {"engagement_form_location": engagement_form_location, "engagement_main_contact": engagement_main_contact, "engagement_risk_rating": engagement_risk_rating, "engagement_received_on": engagement_received_on, "engagement_action_taken": engagement_action_taken, "engagement_notes": engagement_notes, "engagement_status": engagement_status}}})
 

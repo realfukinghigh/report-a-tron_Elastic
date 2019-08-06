@@ -6,7 +6,7 @@ import json
 import requests
 
 headers = {"Content-Type": "application/json"}
-url = "http://192.168.5.131:9200/reportatron/"
+url = "http://192.168.196.129:9200/reportatron/"
 
 def getAssets(): 
 
@@ -59,13 +59,13 @@ def getEngagementsForAsset(asset_id):
 	
 	return data
 
-def createNewTest(eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes):
+def createcreatetest(eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes):
 
-	sqlCreateNewTest = "INSERT INTO tests(eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+	sqlCreatecreatetest = "INSERT INTO tests(eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 	try:
 		conn = psycopg2.connect("dbname=reportatron user=webapp password=<password>")
 		cur = conn.cursor()
-		cur.execute(sqlCreateNewTest, (eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes,))
+		cur.execute(sqlCreatecreatetest, (eng_id,test_type,exec_summary,base_location,test_limitations,main_contact,created_on,test_date,test_notes,))
 		conn.commit()
 		cur.close()
 	except (Exception, psycopg2.DatabaseError) as error:
@@ -89,7 +89,7 @@ def getDocument(doc_id):
 	
 	return data
 	
-def updateEngagement(engagement_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes,_engStatus):
+def updateengagementapi(engagement_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes,_engStatus):
 	
 	body = json.dumps({"doc": {"engagement_stuff" : {"engagement_form_location": engagement_form_location, "engagement_main_contact": engagement_main_contact, "engagement_risk_rating": engagement_risk_rating, "engagement_received_on": engagement_received_on, "engagement_action_taken": engagement_action_taken, "engagement_notes": engagement_notes, "engagement_status": _engStatus}}})
 	
@@ -108,13 +108,13 @@ def updateAsset(asset_id, asset_name, _asset_type, asset_owner, _asset_notes, as
 	if sender.status_code != 200: 
 		raise ReferenceError('update failed')
 
-def createNewIssue(eng_id,test_id,issue_title,issue_location,issue_description,remediation,risk_rating,risk_impact,risk_likelihood,created_on,issue_status,issue_details,issue_notes):
+def createissue(eng_id,test_id,issue_title,issue_location,issue_description,remediation,risk_rating,risk_impact,risk_likelihood,created_on,issue_status,issue_details,issue_notes):
 
-	sqlCreateNewIssue = "INSERT INTO issues(eng_id,test_id,issue_title,issue_location,issue_description,remediation,risk_rating,risk_impact,risk_likelihood,created_on,issue_status,issue_details,issue_notes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING issue_id"
+	sqlcreateissue = "INSERT INTO issues(eng_id,test_id,issue_title,issue_location,issue_description,remediation,risk_rating,risk_impact,risk_likelihood,created_on,issue_status,issue_details,issue_notes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING issue_id"
 	try:
 		conn = psycopg2.connect("dbname=reportatron user=webapp password=<password>")
 		cur = conn.cursor()
-		cur.execute(sqlCreateNewIssue, (eng_id,test_id,issue_title,issue_location,issue_description,remediation,risk_rating,risk_impact,risk_likelihood,created_on,issue_status,issue_details,issue_notes,))
+		cur.execute(sqlcreateissue, (eng_id,test_id,issue_title,issue_location,issue_description,remediation,risk_rating,risk_impact,risk_likelihood,created_on,issue_status,issue_details,issue_notes,))
 		issue_id = cur.fetchall()[0][0]
 		conn.commit()
 		cur.close()

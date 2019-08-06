@@ -1,0 +1,53 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<table class="tablea">
+<caption>Third Party Database</caption>
+<thead>
+<tr>
+<th scope="col">Third Party Name</th>
+<th scope="col">Address</th>
+<th scope="col">Service</th>
+<th scope="col">Description</th>
+<th scope="col">TP Contacts</th>
+<th scope="col">Business Owner</th>
+<th scope="col">Business Department</th>
+<th scope="col">Risk</th>
+<th scope="col">Remote Access</th>
+<th scope="col">Review Date</th>
+<th scope="col">Re-Review Date</th>
+<th scope="col">Notes</th>
+<th scope="col">Update</th>
+</tr>
+</thead>
+<tbody>
+{% for row in data %}
+<tr>
+<td scope="row" data-title="asset_name">{{row['_source']['asset_stuff']['asset_name']}}</td>
+<td data-title="third_party_address">{% if row['_source']['third_party_stuff']['third_party_address'] %}
+{{row['_source']['third_party_stuff']['third_party_address']}}{% else %}{% endif %}</td>
+<td data-title="third_party_service">{% if row['_source']['third_party_stuff']['third_party_service'] %}
+{{row['_source']['third_party_stuff']['third_party_service']}}{% else %}{% endif %}</td>
+<td data-title="asset_notes">{{row['_source']['asset_stuff']['asset_notes']}}</td>
+<td data-title="third_party_contact">{% if row['_source']['third_party_stuff']['third_party_contact'] %}
+{{row['_source']['third_party_stuff']['third_party_contact']}}{% else %}{% endif %}</td>
+<td data-title="asset_owner">{{row['_source']['asset_stuff']['asset_owner']}}</td>
+<td data-title="third_party_business_department">{% if row['_source']['third_party_stuff']['third_party_business_department'] %}
+{{row['_source']['third_party_stuff']['third_party_business_department']}}{% else %}{% endif %}</td>
+<td data-title="third_party_risk_rating">{% if row['_source']['third_party_stuff']['third_party_risk_rating'] %}
+{{row['_source']['third_party_stuff']['third_party_risk_rating']}}{% else %}{% endif %}</td>
+<td data-title="third_party_remote_access">{% if row['_source']['third_party_stuff']['third_party_remote_access'] %}
+{{row['_source']['third_party_stuff']['third_party_remote_access']}}{% else %}{% endif %}</td>
+<td data-title="third_party_review_date">{% if row['_source']['third_party_stuff']['third_party_review_date'] %}
+{{row['_source']['third_party_stuff']['third_party_review_date']}}{% else %}{% endif %}</td>
+<td data-title="third_party_rereview_date">{% if row['_source']['third_party_stuff']['third_party_rereview_date'] %}
+{{row['_source']['third_party_stuff']['third_party_rereview_date']}}{% else %}{% endif %}</td>
+<td data-title="third_party_notes">{% if row['_source']['third_party_stuff']['third_party_notes'] %}
+{{row['_source']['third_party_stuff']['third_party_notes']}}{% else %}{% endif %}</td>
+<td data-title="updateTP"><a class="push_button fa-update darkblue" href="{{ url_for('updatethirdparty', asset_id=row['_id']) }}"></a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

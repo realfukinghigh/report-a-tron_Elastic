@@ -23,11 +23,11 @@ def viewissues():
         data = issueConnection.getIssues()
         return render_template('viewissues.html', data=data)
 
-def createnewissue():
+def createissue():
 	asset_id = request.args.get('asset_id')
 	engagement_id = request.args.get('engagement_id')
 	test_id = request.args.get('test_id')
-	return render_template("createnewissue.html", asset_id=asset_id, engagement_id=engagement_id, test_id=test_id)
+	return render_template("createissue.html", asset_id=asset_id, engagement_id=engagement_id, test_id=test_id)
 
 def createissueapi():
     asset_id = request.form['asset_id']
@@ -46,12 +46,12 @@ def createissueapi():
 
     try:
         timenow = datetime.datetime.now().isoformat().split(".")[0]
-        issueConnection.createNewIssue(test_id, issue_title, issue_location, issue_description, issue_remediation, issue_risk_rating, issue_risk_impact, issue_risk_likelihood, issue_status, issue_details, issue_notes, timenow)
+        issueConnection.createissue(test_id, issue_title, issue_location, issue_description, issue_remediation, issue_risk_rating, issue_risk_impact, issue_risk_likelihood, issue_status, issue_details, issue_notes, timenow)
 
     except Exception as error:
         return redirect(url_for("error"))
 
-    return redirect(url_for("createnewissue", asset_id=asset_id, engagement_id=engagement_id, test_id=test_id))
+    return redirect(url_for("createissue", asset_id=asset_id, engagement_id=engagement_id, test_id=test_id))
 
 def updateissue():
 	issue_id = request.args.get('issue_id')

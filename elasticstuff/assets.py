@@ -7,12 +7,12 @@ class Assets:
 	def __init__(self):
 
 		self.headers = {"Content-Type": "application/json"}
-		self.url = "http://192.168.5.131:9200/reportatron/"
+		self.url = "http://192.168.196.129:9200/reportatron/"
 		self.sess = requests.Session()
 
 	def getAssets(self):
 
-		body = json.dumps({"size": 10000, "query": {"bool": {"must_not": [{"exists": {"field": "engagement_stuff"}}, {"exists": {"field": "test_stuff"}}, {"exists": {"field": "issue_stuff"}}]}}})
+		body = json.dumps({"size": 10000, "query": {"bool": {"must_not": [{"exists": {"field": "engagement_stuff"}}, {"exists": {"field": "test_stuff"}}, {"exists": {"field": "issue_stuff"}}], "must": {"exists": {"field": "asset_stuff"}}}}})
 
 		sender = self.sess.get(self.url + "_search", data=body, headers=self.headers)
 		data = sender.json()['hits']['hits']
@@ -28,7 +28,7 @@ class Assets:
 		if sender.status_code != 201:
 			raise ReferenceError('asset not created')
 
-		return sender.json()
+		return sender.json()['_id']
 
 	def updateAsset(self, asset_id, asset_name, asset_type, asset_owner, asset_notes, asset_internet_facing):
 

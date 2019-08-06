@@ -7,7 +7,7 @@ import markdown
 import configparser
 import elasticstuffa
 from elasticstuff import assets, singledocs, engagements, tests, search, thirdparty
-from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask
+from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask
 #import reportWriter
 #import theStatMachine as stat
 
@@ -22,9 +22,9 @@ app = Flask(__name__)
 def main():
 	return render_template('index.html')
 
-@app.route("/newapp")
-def newapp():
-	return assetsflask.newapp()
+@app.route("/createasset")
+def createasset():
+	return assetsflask.createasset()
 
 @app.route("/error")
 def error():
@@ -38,17 +38,17 @@ def complete():
 def gethtmlreport():
 	return render_template('convert_md.html')
 
-@app.route("/thedata")
-def thedata():
-	return assetsflask.thedata()
+@app.route("/viewassets")
+def viewassets():
+	return assetsflask.viewassets()
 
 @app.route("/report")
 def report():
 	return render_template('report.html')
 
-@app.route("/createapp", methods=['POST'])
-def createapp():
-	return assetsflask.createapp()
+@app.route("/createassetapi", methods=['POST'])
+def createassetapi():
+	return assetsflask.createassetapi()
 
 @app.route("/updateasset")
 def updateasset():
@@ -62,9 +62,9 @@ def updateassetapi():
 def engagements():
 	return engagementsflask.engagements()
 
-@app.route("/newengagement", methods=['POST'])
-def newengagement():
-	return engagementsflask.newengagement()
+@app.route("/createengagement", methods=['POST'])
+def createengagement():
+	return engagementsflask.createengagement()
 
 @app.route("/openengagements")
 def openengagements():
@@ -74,21 +74,21 @@ def openengagements():
 def viewengagements():
 	return engagementsflask.viewengagements()
 
-@app.route("/updateEng")
-def updateEng():
-	return engagementsflask.updateEng()
-
-@app.route("/updateengagement", methods=['POST'])
+@app.route("/updateengagement")
 def updateengagement():
 	return engagementsflask.updateengagement()
 
-@app.route("/newtest", methods=['GET'])
-def newtest():
-	return testsflask.newtest()
+@app.route("/updateengagementapi", methods=['POST'])
+def updateengagementapi():
+	return engagementsflask.updateengagementapi()
 
-@app.route("/createtest", methods=['POST'])
+@app.route("/createtest", methods=['GET'])
 def createtest():
 	return testsflask.createtest()
+
+@app.route("/createtestapi", methods=['POST'])
+def createtestapi():
+	return testsflask.createtestapi()
 
 @app.route("/viewtests", methods=['GET'])
 def viewtests():
@@ -106,9 +106,9 @@ def updatetestapi():
 def viewissues():
 	return issuesflask.viewissues()
 
-@app.route("/createnewissue", methods=['GET'])
-def createnewissue():
-	return issuesflask.createnewissue()
+@app.route("/createissue", methods=['GET'])
+def createissue():
+	return issuesflask.createissue()
 
 @app.route("/createissueapi", methods=['POST'])
 def createissueapi():
@@ -229,55 +229,83 @@ def createthirdparty():
 
 @app.route("/updatethirdparty")
 def updatethirdparty():
-	_tpID = request.args.get('tpID')
+	return thirdpartyflask.updatethirdparty()
+#	_tpID = request.args.get('tpID')
+#
+#	data = dbstuff.getSingleThirdPartyData(_tpID)
+#	return render_template('updatethirdparty.html', data=data)
 
-	data = dbstuff.getSingleThirdPartyData(_tpID)
-	return render_template('updatethirdparty.html', data=data)
+@app.route("/updatethirdpartyapi", methods=['POST'])
+def updatethirdpartyapi():
+	return thirdpartyflask.updatethirdpartyapi()
+#	_tpID = request.form['tpID']
+#	_tpName = request.form['tpName']
+#	_tpAddress = request.form['tpAddress']
+#	_tpService = request.form['tpService']
+#	_tpDescription = request.form['tpDescription']
+#	_tpContacts = request.form['tpContacts']
+#	_busOwner = request.form['busOwner']
+#	_busDept = request.form['busDept']
+#	_tpRisk = request.form['tpRisk']
+#	_remoteAccess = request.form['remoteAccess']
+#	_reviewDate = request.form['reviewDate']
+#	_reReviewDate = request.form['reReviewDate']
+#	_tpNotes = request.form['tpNotes']
+#
+#	try:
+#		dbstuff.updateThirdParty(_tpID,_tpName,_tpAddress,_tpService,_tpDescription,_tpContacts,_busOwner,_busDept,_tpRisk,_remoteAccess,_reviewDate,_reReviewDate,_tpNotes)
+#	except Exception as error:
+#		print(error)
+#		return redirect(url_for("error"))
+#	return redirect(url_for("viewthirdparty"))
 
-@app.route("/updatetp", methods=['POST'])
-def updatetp():
-	_tpID = request.form['tpID']
-	_tpName = request.form['tpName']
-	_tpAddress = request.form['tpAddress']
-	_tpService = request.form['tpService']
-	_tpDescription = request.form['tpDescription']
-	_tpContacts = request.form['tpContacts']
-	_busOwner = request.form['busOwner']
-	_busDept = request.form['busDept']
-	_tpRisk = request.form['tpRisk']
-	_remoteAccess = request.form['remoteAccess']
-	_reviewDate = request.form['reviewDate']
-	_reReviewDate = request.form['reReviewDate']
-	_tpNotes = request.form['tpNotes']
+#@app.route("/createtp", methods=['POST'])
+#def createtp():
+#	_tpName = request.form['tpName']
+#	_tpAddress = request.form['tpAddress']
+#	_tpService = request.form['tpService']
+#	_tpDescription = request.form['tpDescription']
+#	_tpContacts = request.form['tpContacts']
+#	_busOwner = request.form['busOwner']
+#	_busDept = request.form['busDept']
+#	_tpRisk = request.form['tpRisk']
+#	_remoteAccess = request.form['remoteAccess']
+#	_reviewDate = request.form['reviewDate']
+#	_reReviewDate = request.form['reReviewDate']
+#	_tpNotes = request.form['tpNotes']
+#
+#	try:
+#		dbstuff.createThirdParty(_tpName,_tpAddress,_tpService,_tpDescription,_tpContacts,_busOwner,_busDept,_tpRisk,_remoteAccess,_reviewDate,_reReviewDate,_tpNotes)
+#	except Exception as error:
+#		print(error)
+#		return redirect(url_for("error"))
+#	return redirect(url_for("viewthirdparty"))
 
-	try:
-		dbstuff.updateThirdParty(_tpID,_tpName,_tpAddress,_tpService,_tpDescription,_tpContacts,_busOwner,_busDept,_tpRisk,_remoteAccess,_reviewDate,_reReviewDate,_tpNotes)
-	except Exception as error:
-		print(error)
-		return redirect(url_for("error"))
-	return redirect(url_for("viewthirdparty"))
+@app.route('/viewservices')
+def viewservices():
+	return servicesflask.viewservices()
 
-@app.route("/createtp", methods=['POST'])
-def createtp():
-	_tpName = request.form['tpName']
-	_tpAddress = request.form['tpAddress']
-	_tpService = request.form['tpService']
-	_tpDescription = request.form['tpDescription']
-	_tpContacts = request.form['tpContacts']
-	_busOwner = request.form['busOwner']
-	_busDept = request.form['busDept']
-	_tpRisk = request.form['tpRisk']
-	_remoteAccess = request.form['remoteAccess']
-	_reviewDate = request.form['reviewDate']
-	_reReviewDate = request.form['reReviewDate']
-	_tpNotes = request.form['tpNotes']
+@app.route('/viewservicedetail')
+def viewservicedetail():
+	service_id = request.args.get('service_id')
+	return servicesflask.viewservicedetail(service_id)
 
-	try:
-		dbstuff.createThirdParty(_tpName,_tpAddress,_tpService,_tpDescription,_tpContacts,_busOwner,_busDept,_tpRisk,_remoteAccess,_reviewDate,_reReviewDate,_tpNotes)
-	except Exception as error:
-		print(error)
-		return redirect(url_for("error"))
-	return redirect(url_for("viewthirdparty"))
+@app.route('/createservice')
+def createservice():
+	return servicesflask.createservice()
+
+@app.route('/createserviceapi', methods=['POST'])
+def createserviceapi():
+	return servicesflask.createserviceapi()
+
+@app.route('/updateservice')
+def updateservice():
+	service_id = request.args.get('service_id')
+	return servicesflask.updateservice(service_id)
+
+@app.route('/updateserviceapi', methods=['POST'])
+def updateserviceapi():
+	return servicesflask.updateserviceapi()
 
 if __name__ == "__main__":
 	#config = configparser.ConfigParser()

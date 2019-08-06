@@ -6,45 +6,46 @@ assetConnection = assets.Assets()
 docConnection = singledocs.Docs()
 tpConnection = thirdparty.Thirdparty()
 
-def newapp():
-   return render_template('newapp.html')
+def createasset():
+    return render_template('createasset.html')
 
-def thedata():
+def viewassets():
     data = assetConnection.getAssets()
-    return render_template('thedata.html', data=data)
+    return render_template('viewassets.html', data=data)
 
-def createapp():
-	asset_name = request.form['asset_name']
-	asset_type = request.form['asset_type']
-	asset_owner = request.form['asset_owner']
-	asset_notes = request.form['asset_notes']
-	asset_internet_facing = request.form['asset_internet_facing']
-	try:
+def createassetapi():
+    asset_name = request.form['asset_name']
+    asset_type = request.form['asset_type']
+    asset_owner = request.form['asset_owner']
+    asset_notes = request.form['asset_notes']
+    asset_internet_facing = request.form['asset_internet_facing']
+    try:
         timenow = datetime.datetime.now().isoformat().split(".")[0]
-        data = assetConnection.createAsset(asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
+        asset_id = assetConnection.createAsset(asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
 
         if asset_type == "Third Party":
-            tpConnection.createThirdParty(data['_id'], asset_id, asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
+            tpConnection.createThirdParty(asset_id, asset_name, asset_owner)
 
-		return redirect(url_for("thedata"))
+        return redirect(url_for("viewassets"))
 
-	except:
-		return redirect(url_for("error"))
+    except:
+        return redirect(url_for("error"))
 
 def updateasset():
-	asset_id = request.args.get('asset_id')
-	data = docConnection.getDoc(asset_id)
-	return render_template('updateasset.html', data=data)
+    asset_id = request.args.get('asset_id')
+    data = docConnection.getDoc(asset_id)
+    return render_template('updateasset.html', data=data)
 
 def updateassetapi():
-	asset_id = request.form['asset_id']
-	asset_name = request.form['asset_name']
-	asset_type = request.form['asset_type']
-	asset_owner = request.form['asset_owner']
-	asset_notes = request.form['asset_notes']
-	asset_internet_facing = request.form['asset_internet_facing']
-	try:
-		assetConnection.updateAsset(asset_id, asset_name, _asset_type, asset_owner, _asset_notes, asset_internet_facing)
-		return redirect(url_for("thedata"))
-	except:
-		return redirect(url_for("error"))
+    asset_id = request.form['asset_id']
+    asset_name = request.form['asset_name']
+    asset_type = request.form['asset_type']
+    asset_owner = request.form['asset_owner']
+    asset_notes = request.form['asset_notes']
+    asset_internet_facing = request.form['asset_internet_facing']
+    
+    try:
+        assetConnection.updateAsset(asset_id, asset_name, asset_type, asset_owner, asset_notes, asset_internet_facing)
+        return redirect(url_for("viewassets"))
+    except:
+        return redirect(url_for("error"))

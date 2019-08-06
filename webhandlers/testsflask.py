@@ -5,12 +5,12 @@ from elasticstuff import singledocs, tests
 docConnection = singledocs.Docs()
 testConnection = tests.Tests()
 
-def newtest():
+def createtest():
 	asset_id = request.args.get('asset_id')
 	engagement_id = request.args.get('engagement_id')
-	return render_template('newtest.html', asset_id=asset_id, engagement_id=engagement_id)
+	return render_template('createtest.html', asset_id=asset_id, engagement_id=engagement_id)
 
-def createtest():
+def createtestapi():
 	engagement_id = request.form['engagement_id']
 	test_type = request.form['test_type']
 	test_exec_summary = request.form['test_exec_summary']
@@ -23,9 +23,9 @@ def createtest():
 		timenow = datetime.datetime.now().isoformat().split(".")[0]
 
 		if engagement_id:
-			testConnection.createTest(engagement_id,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
+			testConnection.createtestapi(engagement_id,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
 		else:
-			testConnection.createTest(None,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
+			testConnection.createtestapi(None,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
 
 		return redirect(url_for("viewtests"))
 	except:

@@ -1,0 +1,95 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<p class="form_caption">Third Party Update - ID: {{data['_id']}}</p>
+<div class="forms">
+<form class="entry_form" action="/updatethirdpartyapi" method="post">
+<label for="asset_name">Third Party Name</label>
+<input type="text" name="asset_name" id="asset_name" value="{{data['_source']['asset_stuff']['asset_name']}}">
+
+{% if "third_party_address" in data['_source']['third_party_stuff'] %}
+<label for="third_party_address">Third Party Address</label>
+<input type="text" name="third_party_address" id="third_party_address" value="{{data['_source']['third_party_stuff']['third_party_address']}}">
+{% else %}
+<label for="third_party_address">Third Party Address</label>
+<input type="text" name="third_party_address" id="third_party_address">
+{% endif %}
+
+{% if "third_party_service" in data['_source']['third_party_stuff'] %}
+<label for="third_party_service">Service Provided</label>
+<input type="text" name="third_party_service" id="third_party_service" value="{{data['_source']['third_party_stuff']['third_party_service']}}">
+{% else %}
+<label for="third_party_service">Service Provided</label>
+<input type="text" name="third_party_service" id="third_party_service">
+{% endif %}
+
+<label for="asset_notes">Description</label>
+<textarea type="text" name="asset_notes" id="asset_notes">{{data['_source']['asset_stuff']['asset_notes']}}</textarea>
+
+{% if "third_party_contact" in data['_source']['third_party_stuff'] %}
+<label for="third_party_contact">Third Party Contacts</label>
+<input type="text" name="third_party_contact" id="third_party_contact" value="{{data['_source']['third_party_stuff']['third_party_contact']}}">
+{% else %}
+<label for="third_party_contact">Third Party Contacts</label>
+<input type="text" name="third_party_contact" id="third_party_contact">
+{% endif %}
+
+<label for="asset_owner">Business Owners</label>
+<input type="text" name="asset_owner" id="asset_owner" value="{{data['_source']['asset_stuff']['asset_owner']}}">
+
+{% if "third_party_business_department" in data['_source']['third_party_stuff'] %}
+<label for="third_party_business_department">Business Department</label>
+<input type="text" name="third_party_business_department" id="third_party_business_department" value="{{data['_source']['third_party_stuff']['third_party_business_department']}}">
+{% else %}
+<label for="third_party_business_department">Business Department</label>
+<input type="text" name="third_party_business_department" id="third_party_business_department">
+{% endif %}
+
+{% if "third_party_risk_rating" in data['_source']['third_party_stuff'] %}
+<label for="third_party_risk_rating">Risk</label>
+<input type="text" name="third_party_risk_rating" id="third_party_risk_rating" value="{{data['_source']['third_party_stuff']['third_party_risk_rating']}}">
+{% else %}
+<label for="third_party_risk_rating">Risk</label>
+<input type="text" name="third_party_risk_rating" id="third_party_risk_rating">
+{% endif %}
+
+{% if "third_party_remote_access" in data['_source']['third_party_stuff'] %}
+<label for="third_party_remote_access">Remote Access</label>
+<input type="text" name="third_party_remote_access" id="third_party_remote_access" value="{{data['_source']['third_party_stuff']['third_party_remote_access']}}">
+{% else %}
+<label for="third_party_remote_access">Remote Access</label>
+<input type="text" name="third_party_remote_access" id="third_party_remote_access">
+{% endif %}
+
+{% if "third_party_review_date" in data['_source']['third_party_stuff'] %}
+<label for="third_party_review_date">Review Date</label>
+<input type="text" name="third_party_review_date" id="third_party_review_date" value="{{data['_source']['third_party_stuff']['third_party_review_date']}}">
+{% else %}
+<label for="third_party_review_date">Review Date</label>
+<input type="text" name="third_party_review_date" id="third_party_review_date">
+{% endif %}
+
+{% if "third_party_rereview_date" in data['_source']['third_party_stuff'] %}
+<label for="third_party_rereview_date">Re-Review Date</label>
+<input type="text" name="third_party_rereview_date" id="third_party_rereview_date" value="{{data['_source']['third_party_stuff']['third_party_rereview_date']}}">
+{% else %}
+<label for="third_party_rereview_date">Re-Review Date</label>
+<input type="text" name="third_party_rereview_date" id="third_party_rereview_date">
+{% endif %}
+
+{% if "third_party_notes" in data['_source']['third_party_stuff'] %}
+<label for="third_party_notes">Notes</label>
+<textarea type="text" name="third_party_notes" id="third_party_notes">{{data['_source']['third_party_stuff']['third_party_notes']}}</textarea>
+{% else %}
+<label for="third_party_notes">Notes</label>
+<textarea type="text" name="third_party_notes" id="third_party_notes"></textarea>
+{% endif %}
+
+<input type="hidden" name="asset_id" id="asset_id" value="{{data['_id']}}">
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Update</button>
+</div>
+</form>
+</div>
+{% endblock %}

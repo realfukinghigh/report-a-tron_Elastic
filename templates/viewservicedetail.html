@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<table class="tablea">
+<caption>{{data['_source']['service_stuff']['service_name']}}</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Asset Type</th>
+<th scope="col">Asset Owner</th>
+<th scope="col">Asset Notes</th>
+<th scope="col">Asset Internet Facing</th>
+</tr>
+</thead>
+<tbody>
+{% for row in data['asset_stuff'] %}
+<tr>
+<td data-title="asset_name">{{row['asset_name']}}</td>
+<td data-title="asset_type">{{row['asset_type']}}</td>
+<td data-title="asset_owner">{{row['asset_owner']}}</td>
+<td data-title="asset_notes">{{row['asset_notes']}}</td>
+<td data-title="asset_internet_facing">{{row['asset_internet_facing']}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

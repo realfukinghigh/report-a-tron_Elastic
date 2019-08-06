@@ -13,7 +13,7 @@ def engagements():
 	else:
 		return render_template("engagements.html")
 
-def newengagement():
+def createengagement():
 	asset_id = request.form['asset_id']
 	engagement_form_location = request.form['engagement_form_location']
 	engagement_main_contact = request.form['engagement_main_contact']
@@ -51,12 +51,12 @@ def viewengagements():
 		data = engagementConnection.getEngagements()
 		return render_template('viewengagements.html', data=data)
 
-def updateEng():
+def updateengagement():
 	engagement_id = request.args.get('engagement_id')
 	data = docConnection.getDoc(engagement_id)
-	return render_template('updateeng.html', data=data)
+	return render_template('updateengagement.html', data=data)
 
-def updateengagement():
+def updateengagementapi():
 	engagement_id = request.form['engagement_id']
 	engagement_form_location = request.form['engagement_form_location']
 	engagement_main_contact = request.form['engagement_main_contact']
@@ -66,7 +66,7 @@ def updateengagement():
 	engagement_notes = request.form['engagement_notes']
 	_engStatus = request.form['engStatus']
 	try:
-		engagementConnection.updateEngagement(engagement_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes,_engStatus)
+		engagementConnection.updateengagementapi(engagement_id,engagement_form_location,engagement_main_contact,engagement_risk_rating,engagement_received_on,engagement_action_taken,engagement_notes,_engStatus)
 		return redirect(url_for("viewengagements"))
 	except:
 		return redirect(url_for("error"))

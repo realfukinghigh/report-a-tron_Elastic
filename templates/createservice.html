@@ -1,0 +1,37 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/forms.css">
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<div class="forms">
+<form class="entry_form" action="/createserviceapi" method="post">
+<label for="service_name">Service Name</label>
+<input type="text" name="service_name" id="service_name" required autofocus>
+<label for="service_owner">Service Owner</label>
+<input type="text" name="service_owner" id="service_owner" required>
+<label for="service_has_assets">Service Assets</label>
+<input type="text" name="service_has_assets" id="service_has_assets" required>
+<div class="button_frame">
+<button class="push_button_big blue" type="submit">Submit Data</button>
+</div>
+</form>
+</div>
+<table class="tablea">
+<caption>Asset Data</caption>
+<thead>
+<tr>
+<th scope="col">Asset Name</th>
+<th scope="col">Asset Type</th>
+<th scope="col">Asset ID</th>
+</tr>
+</thead>
+<tbody>
+{% for row in data %}
+<tr>
+<td data-title="asset_name">{{row['_source']['asset_stuff']['asset_name']}}</td>
+<td data-title="asset_type">{{row['_source']['asset_stuff']['asset_type']}}</td>
+<td data-title="asset_type">{{row['_id']}}</td>
+</tr>
+{% endfor %}
+</tbody>
+{% endblock %}

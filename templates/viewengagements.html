@@ -30,9 +30,9 @@
 <td data-title="engagement_notes">{{row['_source']['engagement_stuff']['engagement_notes']}}</td>
 <td data-title="engagement_action_taken">{{row['_source']['engagement_stuff']['engagement_action_taken']}}</td>
 <td data-title="engStatus">{{row['_source']['engagement_stuff']['engagement_status']}}</td>
-<td data-title="updateEng"><a class="push_button fa-update darkblue" href="{{ url_for('updateEng', engagement_id=row['_id']) }}"></a></td>
+<td data-title="updateengagement"><a class="push_button fa-update darkblue" href="{{ url_for('updateengagement', engagement_id=row['_id']) }}"></a></td>
 <td data-title="viewTest"><a class="push_button fa-eye darkblue" href="{{ url_for('viewtests', engagement_id=row['_id']) }}"></a></td>
-<td data-title="newTest"><a class="push_button fa-plus darkblue" href="{{ url_for('newtest', engagement_id=row['_id']) }}"></a></td>
+<td data-title="createtest"><a class="push_button fa-plus darkblue" href="{{ url_for('createtest', engagement_id=row['_id']) }}"></a></td>
 </tr>
 {% endfor %}
 </tbody>

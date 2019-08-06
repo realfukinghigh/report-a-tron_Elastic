@@ -29,7 +29,7 @@
 <td data-title="test_date">{{row['_source']['test_stuff']['test_date']}}</td>
 <td data-title="updatetest"><a class="push_button fa-update darkblue" href="{{ url_for('updatetest', test_id=row['_id']) }}"></a></td>
 <td data-title="viewissues"><a class="push_button fa-eye darkblue" href="{{ url_for('viewissues', test_id=row['_id']) }}"></a></td>
-<td data-title="createnewissue"><a class="push_button fa-plus darkblue" href="{{ url_for('createnewissue', test_id=row['_id']) }}"></a></td>
+<td data-title="createissue"><a class="push_button fa-plus darkblue" href="{{ url_for('createissue', test_id=row['_id']) }}"></a></td>
 <td data-title="testreport"><a class="push_button fa-file darkblue" href="{{ url_for('testreport', test_id=row['_id']) }}"></a></td>
 </tr>
 {% endfor %}
