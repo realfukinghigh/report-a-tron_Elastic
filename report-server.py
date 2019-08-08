@@ -1,17 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
-import random
-import json
-import datetime
-import requests
-import markdown
 import configparser
-from elasticstuff import assets, singledocs, engagements, tests, search, thirdparty
+from elasticstuff import search
 from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, loginflask, statsflask
 import flask_login
 
 
 app = Flask(__name__)
 login_manager = flask_login.LoginManager(app)
+
+searchConnection = search.Search()
 
 @app.route("/")
 def main():
@@ -194,20 +191,6 @@ def stats():
 @app.route("/viewstats")
 def viewstats():
 	return statsflask.viewstats()
-#
-#	_startDate = request.form['startDate']
-#	_endDate = request.form['endDate']
-#
-#	getStats = stat.ReportatronStats()
-#	data = getStats.getAllTheStats(_startDate, _endDate)
-#
-#	getWhitehat = stat.GetWhitehatData()
-#	vulnData = getWhitehat.groupVulns()
-#	processWh = stat.ProcessGroup(vulnData)
-#	otherData = processWh.getGroupStats()
-#
-#	data.update(otherData)
-#	return render_template('viewstats.html', data=data)
 
 @app.route("/search")
 def search():
