@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import configparser
 from elasticstuff import search
-from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, loginflask, statsflask
+from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, loginflask, statsflask, reportsflask
 import flask_login
 
 
@@ -136,53 +136,45 @@ def issuelinkapi():
 
 @app.route("/testreport", methods=['GET'])
 def testreport():
-	test_id = request.args.get('test_id')
-	asset_id = request.args.get('asset_id')
-	testData = dbstuff.getTestDataForReport(test_id)
-	issueData = dbstuff.getIssuesForTest(test_id)
-	if asset_id:
-		asset_name = dbstuff.getSingleAssetTestData(asset_id)[0]['asset_name']
-	else:
-		asset_name = "None"
-	reportWriter.writeTestReport(issueData, asset_name, testData)
-	return gethtmlreport()
+	return reportsflask.testReport()
 
-@app.route("/adhocreport", methods=['GET'])
-def adhocreport():
-	return render_template('adhocreport.html')
 
-@app.route("/writeadhocreport", methods=['POST'])
-def writeadhocreport():
-	asset_name = request.form['asset_name']
-	_issuesOpen = request.form.get('issuesOpen')
-	if _issuesOpen:
-		_issuesOpen = "Open"
-	_issuesClosed = request.form.get('issuesClosed')
-	if _issuesClosed:
-		_issuesClosed = "Closed"
-	_issuesRA = request.form.get('issuesRA')
-	if _issuesRA:
-		_issuesRA = "Risk Accepted"
-	print(_issuesOpen, _issuesClosed, _issuesRA)
-	_reportType = request.form['reportType']
+#@app.route("/adhocreport", methods=['GET'])
+#def adhocreport():
+#	return render_template('adhocreport.html')
 
-	asset_id = dbstuff.getasset_idFromTitle(asset_name)[0]
-	if _reportType == "testReport":
-		pass
-	elif _reportType == "engagementReport":
-		pass
-	elif _reportType == "assetReport":
-		try:
-			issueData = dbstuff.getIssuesForAsset(asset_id)
-			print(issueData)
-			engCount = dbstuff.countEngagementsForAsset(asset_id)
-			print(engCount)
-			testData = dbstuff.getTestsForAsset(asset_id)
-			print(testData)
-			reportWriter.writeAssetReport(issueData, engCount, testData)
-			return gethtmlreport()
-		except:
-			return render_template('error.html')
+#@app.route("/writeadhocreport", methods=['POST'])
+#def writeadhocreport():
+#	asset_name = request.form['asset_name']
+#	_issuesOpen = request.form.get('issuesOpen')
+#	if _issuesOpen:
+#		_issuesOpen = "Open"
+#	_issuesClosed = request.form.get('issuesClosed')
+#	if _issuesClosed:
+#		_issuesClosed = "Closed"
+#	_issuesRA = request.form.get('issuesRA')
+#	if _issuesRA:
+#		_issuesRA = "Risk Accepted"
+#	print(_issuesOpen, _issuesClosed, _issuesRA)
+#	_reportType = request.form['reportType']
+#
+#	asset_id = dbstuff.getasset_idFromTitle(asset_name)[0]
+#	if _reportType == "testReport":
+#		pass
+#	elif _reportType == "engagementReport":
+#		pass
+#	elif _reportType == "assetReport":
+#		try:
+#			issueData = dbstuff.getIssuesForAsset(asset_id)
+#			print(issueData)
+#			engCount = dbstuff.countEngagementsForAsset(asset_id)
+#			print(engCount)
+#			testData = dbstuff.getTestsForAsset(asset_id)
+#			print(testData)
+#			reportWriter.writeAssetReport(issueData, engCount, testData)
+#			return gethtmlreport()
+#		except:
+#			return render_template('error.html')
 
 @app.route("/stats")
 def stats():
