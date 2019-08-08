@@ -3,5 +3,8 @@ datetime
 flask
 requests
 configparser
-psycopg2-binary
 pyyaml
+json
+random
+flask_login
+calendar

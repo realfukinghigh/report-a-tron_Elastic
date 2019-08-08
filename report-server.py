@@ -5,22 +5,29 @@ import datetime
 import requests
 import markdown
 import configparser
-import elasticstuffa
 from elasticstuff import assets, singledocs, engagements, tests, search, thirdparty
-from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask
-#import reportWriter
-#import theStatMachine as stat
+from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, loginflask, statsflask
+import flask_login
 
-assetConnection = assets.Assets()
-docConnection = singledocs.Docs()
-engagementConnection = engagements.Engagements()
-testConnection = tests.Tests()
-searchConnection = search.Search()
 
 app = Flask(__name__)
+login_manager = flask_login.LoginManager(app)
+
 @app.route("/")
 def main():
 	return render_template('index.html')
+
+@app.route('/login')
+def login():
+	return loginflask.login()
+
+@app.route('/loginapi', methods=['POST'])
+def loginapi():
+	is_logged_in = loginflask.loginapi()
+	if is_logged_in:
+		return render_template('index.html')
+	else:
+		return render_template('login.html')
 
 @app.route("/createasset")
 def createasset():
@@ -129,15 +136,6 @@ def linkissue():
 @app.route("/issuelinkapi", methods=['POST'])
 def issuelinkapi():
 	return issuesflask.issuelinkapi()
-#	asset_id = request.form['asset_id']
-#	_issueID = request.form['issueID']
-#	try:
-#		dbstuff.createAssetIssueLink(asset_id, _issueID)
-#		return redirect(url_for("viewissues"))
-#	except:
-#		return redirect(url_for("error"))
-
-
 
 @app.route("/testreport", methods=['GET'])
 def testreport():
@@ -193,22 +191,23 @@ def writeadhocreport():
 def stats():
 	return render_template('stats.html')
 
-@app.route("/viewstats", methods=['POST'])
+@app.route("/viewstats")
 def viewstats():
-
-	_startDate = request.form['startDate']
-	_endDate = request.form['endDate']
-
-	getStats = stat.ReportatronStats()
-	data = getStats.getAllTheStats(_startDate, _endDate)
-
-	getWhitehat = stat.GetWhitehatData()
-	vulnData = getWhitehat.groupVulns()
-	processWh = stat.ProcessGroup(vulnData)
-	otherData = processWh.getGroupStats()
-
-	data.update(otherData)
-	return render_template('viewstats.html', data=data)
+	return statsflask.viewstats()
+#
+#	_startDate = request.form['startDate']
+#	_endDate = request.form['endDate']
+#
+#	getStats = stat.ReportatronStats()
+#	data = getStats.getAllTheStats(_startDate, _endDate)
+#
+#	getWhitehat = stat.GetWhitehatData()
+#	vulnData = getWhitehat.groupVulns()
+#	processWh = stat.ProcessGroup(vulnData)
+#	otherData = processWh.getGroupStats()
+#
+#	data.update(otherData)
+#	return render_template('viewstats.html', data=data)
 
 @app.route("/search")
 def search():
@@ -216,12 +215,9 @@ def search():
 	data = searchConnection.search(searchTerm)
 	return render_template('searchresults.html', data=data)
 
-
 @app.route("/viewthirdparty")
 def viewthirdparty():
 	return thirdpartyflask.viewthirdparty()
-#	data = dbstuff.getAllThirdPartyData()
-#	return render_template('viewthirdparty.html', data=data)
 
 @app.route("/createthirdparty")
 def createthirdparty():
@@ -230,56 +226,10 @@ def createthirdparty():
 @app.route("/updatethirdparty")
 def updatethirdparty():
 	return thirdpartyflask.updatethirdparty()
-#	_tpID = request.args.get('tpID')
-#
-#	data = dbstuff.getSingleThirdPartyData(_tpID)
-#	return render_template('updatethirdparty.html', data=data)
 
 @app.route("/updatethirdpartyapi", methods=['POST'])
 def updatethirdpartyapi():
 	return thirdpartyflask.updatethirdpartyapi()
-#	_tpID = request.form['tpID']
-#	_tpName = request.form['tpName']
-#	_tpAddress = request.form['tpAddress']
-#	_tpService = request.form['tpService']
-#	_tpDescription = request.form['tpDescription']
-#	_tpContacts = request.form['tpContacts']
-#	_busOwner = request.form['busOwner']
-#	_busDept = request.form['busDept']
-#	_tpRisk = request.form['tpRisk']
-#	_remoteAccess = request.form['remoteAccess']
-#	_reviewDate = request.form['reviewDate']
-#	_reReviewDate = request.form['reReviewDate']
-#	_tpNotes = request.form['tpNotes']
-#
-#	try:
-#		dbstuff.updateThirdParty(_tpID,_tpName,_tpAddress,_tpService,_tpDescription,_tpContacts,_busOwner,_busDept,_tpRisk,_remoteAccess,_reviewDate,_reReviewDate,_tpNotes)
-#	except Exception as error:
-#		print(error)
-#		return redirect(url_for("error"))
-#	return redirect(url_for("viewthirdparty"))
-
-#@app.route("/createtp", methods=['POST'])
-#def createtp():
-#	_tpName = request.form['tpName']
-#	_tpAddress = request.form['tpAddress']
-#	_tpService = request.form['tpService']
-#	_tpDescription = request.form['tpDescription']
-#	_tpContacts = request.form['tpContacts']
-#	_busOwner = request.form['busOwner']
-#	_busDept = request.form['busDept']
-#	_tpRisk = request.form['tpRisk']
-#	_remoteAccess = request.form['remoteAccess']
-#	_reviewDate = request.form['reviewDate']
-#	_reReviewDate = request.form['reReviewDate']
-#	_tpNotes = request.form['tpNotes']
-#
-#	try:
-#		dbstuff.createThirdParty(_tpName,_tpAddress,_tpService,_tpDescription,_tpContacts,_busOwner,_busDept,_tpRisk,_remoteAccess,_reviewDate,_reReviewDate,_tpNotes)
-#	except Exception as error:
-#		print(error)
-#		return redirect(url_for("error"))
-#	return redirect(url_for("viewthirdparty"))
 
 @app.route('/viewservices')
 def viewservices():

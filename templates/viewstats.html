@@ -1,0 +1,99 @@
+{% extends "template.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/buttons.css">
+<link rel="stylesheet" type="text/css" href="static/tables.css">
+<table class="tablea">
+<caption>Engagements Received Per Month</caption>
+<thead>
+<tr>
+<th scope="col">Month</th>
+<th scope="col">Number Received</th>
+<th scope="col">Application</th>
+<th scope="col">Third Party</th>
+<th scope="col">Other</th>
+</tr>
+</thead>
+<tbody>
+{% for row in reportatron_stats['engagements_by_month']['buckets'] %}
+<tr>
+<td data-title="month">{{row['month']}}</td>
+<td data-title="number">{{row['number']}}</td>
+<td data-title="application">{{row['asset_types']['Application']}}</td>
+<td data-title="thirdparty">{{row['asset_types']['Third Party']}}</td>
+<td data-title="other">{{row['asset_types']['Other']}}</td>
+{% endfor %}
+</tr>
+</tbody>
+</table>
+
+<table class="tablea">
+<caption>Issues Created Per Month</caption>
+<thead>
+<tr>
+<th scope="col">Month</th>
+<th scope="col">Number Created</th>
+<th scope="col">Critical</th>
+<th scope="col">High</th>
+<th scope="col">Medium</th>
+<th scope="col">Low</th>
+</tr>
+</thead>
+<tbody>
+{% for row in reportatron_stats['issues_by_month']['buckets'] %}
+<tr>
+<td data-title="month">{{row['month']}}</td>
+<td data-title="number">{{row['number']}}</td>
+<td data-title="critical">{{row['issue_risk_rating']['Critical']}}</td>
+<td data-title="high">{{row['issue_risk_rating']['High']}}</td>
+<td data-title="medium">{{row['issue_risk_rating']['Medium']}}</td>
+<td data-title="low">{{row['issue_risk_rating']['Low']}}</td>
+{% endfor %}
+</tr>
+</tbody>
+</table>
+
+<table class="tablea">
+<caption>Open Issues by Type</caption>
+<thead>
+<tr>
+<th scope="col">Asset Type</th>
+<th scope="col">Critical</th>
+<th scope="col">High</th>
+<th scope="col">Medium</th>
+<th scope="col">Low</th>
+</tr>
+</thead>
+<tbody>
+{% for row in reportatron_stats['issues_by_type']['buckets'] %}
+<tr>
+<td data-title="type">{{row['type']}}</td>
+<td data-title="critical">{{row['issues']['Critical']}}</td>
+<td data-title="high">{{row['issues']['High']}}</td>
+<td data-title="medium">{{row['issues']['Medium']}}</td>
+<td data-title="Low">{{row['issues']['Low']}}</td>
+{% endfor %}
+</tr>
+</tbody>
+</table>
+
+<table class="tablea">
+<caption>Open Internet Facing Issues</caption>
+<thead>
+<tr>
+<th scope="col">Critical</th>
+<th scope="col">High</th>
+<th scope="col">Medium</th>
+<th scope="col">Low</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-title="critical">{{reportatron_stats['internet_issues']['Critical']}}</td>
+<td data-title="high">{{reportatron_stats['internet_issues']['High']}}</td>
+<td data-title="medium">{{reportatron_stats['internet_issues']['Medium']}}</td>
+<td data-title="Low">{{reportatron_stats['internet_issues']['Low']}}</td>
+</tr>
+</tbody>
+</table>
+
+{% endblock %}
