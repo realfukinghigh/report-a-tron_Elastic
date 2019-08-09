@@ -1,5 +1,6 @@
 import json
 import requests
+import config
 
 
 class Engagements:
@@ -7,8 +8,9 @@ class Engagements:
 	def __init__(self):
 
 		self.headers = {"Content-Type": "application/json"}
-		self.url = "http://192.168.196.129:9200/reportatron/"
 		self.sess = requests.Session()
+		config_values = config.StaticValues().config_file
+		self.url = config_values['elastic_url']
 
 	def getEngagements(self):
 

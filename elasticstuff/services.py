@@ -1,13 +1,15 @@
 import requests
 import json
+import config
 
 class Services:
 
     def __init__(self):
 
         self.headers = {"Content-Type": "application/json"}
-        self.url = "http://192.168.196.129:9200/reportatron/"
         self.sess = requests.Session()
+        config_values = config.StaticValues().config_file
+        self.url = config_values['elastic_url']
 
     def createService(self, service_name, service_owner, service_has_assets):
 

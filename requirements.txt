@@ -2,10 +2,8 @@ markdown
 datetime
 flask
 requests
-configparser
-pyyaml
 json
 random
-flask_login
 calendar
 os
+waitress

@@ -1,30 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
-import configparser
 from elasticstuff import search
 from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, loginflask, statsflask, reportsflask
-import flask_login
+from waitress import serve
+import config
 
 
 app = Flask(__name__)
-login_manager = flask_login.LoginManager(app)
+config_values = config.StaticValues().config_file
+app.config.from_object(config_values['config_type'])
 
 searchConnection = search.Search()
 
 @app.route("/")
 def main():
 	return render_template('index.html')
-
-@app.route('/login')
-def login():
-	return loginflask.login()
-
-@app.route('/loginapi', methods=['POST'])
-def loginapi():
-	is_logged_in = loginflask.loginapi()
-	if is_logged_in:
-		return render_template('index.html')
-	else:
-		return render_template('login.html')
 
 @app.route("/createasset")
 def createasset():
@@ -138,44 +127,6 @@ def issuelinkapi():
 def testreport():
 	return reportsflask.testReport()
 
-
-#@app.route("/adhocreport", methods=['GET'])
-#def adhocreport():
-#	return render_template('adhocreport.html')
-
-#@app.route("/writeadhocreport", methods=['POST'])
-#def writeadhocreport():
-#	asset_name = request.form['asset_name']
-#	_issuesOpen = request.form.get('issuesOpen')
-#	if _issuesOpen:
-#		_issuesOpen = "Open"
-#	_issuesClosed = request.form.get('issuesClosed')
-#	if _issuesClosed:
-#		_issuesClosed = "Closed"
-#	_issuesRA = request.form.get('issuesRA')
-#	if _issuesRA:
-#		_issuesRA = "Risk Accepted"
-#	print(_issuesOpen, _issuesClosed, _issuesRA)
-#	_reportType = request.form['reportType']
-#
-#	asset_id = dbstuff.getasset_idFromTitle(asset_name)[0]
-#	if _reportType == "testReport":
-#		pass
-#	elif _reportType == "engagementReport":
-#		pass
-#	elif _reportType == "assetReport":
-#		try:
-#			issueData = dbstuff.getIssuesForAsset(asset_id)
-#			print(issueData)
-#			engCount = dbstuff.countEngagementsForAsset(asset_id)
-#			print(engCount)
-#			testData = dbstuff.getTestsForAsset(asset_id)
-#			print(testData)
-#			reportWriter.writeAssetReport(issueData, engCount, testData)
-#			return gethtmlreport()
-#		except:
-#			return render_template('error.html')
-
 @app.route("/stats")
 def stats():
 	return render_template('stats.html')
@@ -233,7 +184,4 @@ def updateserviceapi():
 	return servicesflask.updateserviceapi()
 
 if __name__ == "__main__":
-	#config = configparser.ConfigParser()
-	#config.read('default.conf')
-	#hostIP = config['DEFAULT']['host']
-	app.run()
+	serve(app, host=config_values['server_ip'], port=int(config_values['server_port']))
