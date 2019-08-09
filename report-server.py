@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from elasticstuff import search
-from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, loginflask, statsflask, reportsflask
+from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, thirdpartyflask, servicesflask, statsflask, reportsflask
 from waitress import serve
 import config
 

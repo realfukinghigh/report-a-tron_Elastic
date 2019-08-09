@@ -19,8 +19,10 @@ class Stats:
 		issues_by_month = self.issueStats()
 		issues_by_type = self.issueTypeStats()
 		internet_issues = self.internetFacingStats()
+		internet_basics = self.internetFacingBasics()
+		third_party_basics = self.thirdPartyBasics()
 
-		return {"engagements_by_month": engagements_by_month, "issues_by_month": issues_by_month, "issues_by_type": issues_by_type, "internet_issues": internet_issues}
+		return {"engagements_by_month": engagements_by_month, "issues_by_month": issues_by_month, "issues_by_type": issues_by_type, "internet_issues": internet_issues, "internet_basics": internet_basics, "third_party_basics": third_party_basics}
 
 
 	def engagementStats(self):
@@ -41,9 +43,12 @@ class Stats:
 			engagements_by_month_list.append({"month": calendar_month, "number": date['doc_count'], "asset_types": asset_type_dict})
 			asset_type_dict = {}
 
-		engagements_by_month = {"buckets": engagements_by_month_list}
+		open_engagements_query = json.dumps({"size": 0, "query": {"bool": {"must_not": [{"exists": {"field": "issue_stuff"}}, {"exists": {"field": "test_stuff"}}]}}, "aggs": {"engagement_status": {"terms": {"field": "engagement_stuff.engagement_status.keyword", "size": 10000}}}})
 
-		return engagements_by_month
+		open_engagements = self.sess.get(self.url + "_search", headers=self.headers, data=open_engagements_query)
+		open_engagements = open_engagements.json()['aggregations']['engagement_status']['buckets']
+
+		return {"buckets": engagements_by_month_list, "open_engagements": open_engagements}
 
 	def issueStats(self):
 
@@ -99,3 +104,31 @@ class Stats:
 			internet_issues_dict.update({bucket['key']: bucket['doc_count']})
 
 		return internet_issues_dict
+
+	def internetFacingBasics(self):
+
+		internet_basics_query = json.dumps({"size": 0, "query": {"bool": {"must_not": {"exists": {"field": "issue_stuff.issue_title"}}, "filter": [{"term": {"asset_stuff.asset_internet_facing.keyword": "1"}}]}}})
+
+		internet_facing_apps = self.sess.get(self.url + "_search", headers=self.headers, data=internet_basics_query)
+		internet_facing_apps = internet_facing_apps.json()['hits']['total']['value']
+
+		internet_basics_query = json.dumps({"size": 0, "query": {"bool": {"must_not": {"exists": {"field": "issue_stuff.issue_title"}}, "filter": [{"term": {"test_stuff.test_type.keyword": "Application Security Test"}}, {"term": {"asset_stuff.asset_internet_facing.keyword": "1"}}]}}})
+
+		internet_tests = self.sess.get(self.url + "_search", headers=self.headers, data=internet_basics_query)
+		internet_tests = internet_tests.json()['hits']['total']['value']
+
+		return {"number_internet_facing_apps": str(internet_facing_apps), "number_of_internet_facing_tests": str(internet_tests)}
+
+	def thirdPartyBasics(self):
+
+		tp_basics_query = json.dumps({"size": 0, "query": {"bool": {"must_not": [{"exists": {"field": "issue_stuff.issue_title"}}, {"exists": {"field": "test_stuff.test_type"}}, {"exists": {"field": "engagement_stuff.engagement_form_location"}}], "filter": [{"term": {"asset_stuff.asset_type.keyword": "Third Party"}}]}}})
+
+		no_third_party = self.sess.get(self.url + "_search", headers=self.headers, data=tp_basics_query)
+		no_third_party = no_third_party.json()['hits']['total']['value']
+
+		tp_basics_query = json.dumps({"size": 0, "query": {"bool": {"must_not": {"exists": {"field": "issue_stuff.issue_title"}}, "filter": [{"term": {"test_stuff.test_type.keyword": "Third Party Assessment"}}]}}})
+
+		no_third_party_tests = self.sess.get(self.url + "_search", headers=self.headers, data=tp_basics_query)
+		no_third_party_tests = no_third_party_tests.json()['hits']['total']['value']
+
+		return {"number_of_third_parties": no_third_party, "number_third_party_tests": no_third_party_tests}
