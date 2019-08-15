@@ -1,7 +1,7 @@
 {
   "config_type": "config.ProductionConfig",
   "server_ip": "127.0.0.1",
-  "server_port": "8443",
+  "server_port": "8888",
   "elastic_url": "http://192.168.196.129:9200/reportatron/",
   "elastic_users": "http://192.168.196.129:9200/reportatron_users/"
 }
