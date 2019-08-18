@@ -8,6 +8,15 @@
 <input type="text" name="username" id="username" required autofocus>
 <label for="password">Password</label>
 <input type="password" name="password" id="password" required>
+<label for="message">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  {{ message }}
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+</label>
 <div class="button_frame">
 <button class="push_button_big blue" type="submit">Login</button>
 </div>

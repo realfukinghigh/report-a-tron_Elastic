@@ -4,12 +4,13 @@ from webhandlers import assetsflask, engagementsflask, testsflask, issuesflask, 
 from waitress import serve
 import config
 import flask_login
+from datetime import timedelta
 
 
 app = Flask(__name__)
 config_values = config.StaticValues().config_file
 app.config.from_object(config_values['config_type'])
-print(app.config)
+app.permanent_session_lifetime = timedelta(minutes=15)
 
 searchConnection = search.Search()
 
@@ -32,7 +33,15 @@ def loginapi():
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    return 'Logged out'
+    return redirect(url_for('login'))
+
+@app.route('/changepassword')
+def changepassword():
+    return loginflask.changepassword()
+
+@app.route('/changepasswordapi', methods=['POST'])
+def changepasswordapi():
+    return loginflask.changepasswordapi()
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
@@ -40,10 +49,11 @@ def unauthorized_handler():
 
 @app.after_request
 def set_response_headers(response):
-	response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-	response.headers['Pragma'] = 'no-cache'
-	response.headers['Expires'] = '0'
-	return response
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    response.headers['Server'] = 'Report-a-Tron'
+    return response
 
 @app.route("/")
 @flask_login.login_required

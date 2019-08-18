@@ -34,12 +34,20 @@ class Login:
         sender = self.sess.post(self.url + "_doc", data=body, headers=self.headers)
 
         if sender.status_code != 201:
-            raise ReferenceError('asset not created')
+            raise ReferenceError('user not created')
 
+    def updateUser(self, username, password):
+
+        hashed_password = self.hashPassword(password)
+        body = json.dumps({"doc": {username: {"password": hashed_password.decode('utf8')}}})
+
+        doc_id_query = json.dumps({"query": {"bool": {"must": {"exists": {"field": str(username)}}}}})
+        doc_id = self.sess.post(self.url + "_search", data=doc_id_query, headers=self.headers).json()['hits']['hits'][0]['_id']
+        sender = self.sess.post(self.url + "_update/" + str(doc_id), data=body, headers=self.headers)
 
     def hashPassword(self, password):
 
-        hashed_password = bcrypt.hashpw(password, bcrypt.gensalt(12))
+        hashed_password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt(12))
         return hashed_password
 
     def comparePassword(self, username, password):
