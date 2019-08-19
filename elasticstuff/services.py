@@ -6,10 +6,11 @@ class Services:
 
     def __init__(self):
 
-        self.headers = {"Content-Type": "application/json"}
-        self.sess = requests.Session()
         config_values = config.StaticValues().config_file
         self.url = config_values['elastic_url']
+        self.headers = {"Content-Type": "application/json", "Authorization": "Basic " + config_values['reportatron_service_user']}
+        self.headers = {"Content-Type": "application/json"}
+        self.sess = requests.Session()
 
     def createService(self, service_name, service_owner, service_has_assets):
 

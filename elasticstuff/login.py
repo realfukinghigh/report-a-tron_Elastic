@@ -11,10 +11,13 @@ class Login:
 
     def __init__(self):
 
-        self.headers = {"Content-Type": "application/json"}
-        self.sess = requests.Session()
         config_values = config.StaticValues().config_file
         self.url = config_values['elastic_users']
+        self.auth_value = config_values['reportatron_service_user']
+        self.headers = {"Content-Type": "application/json", "Authorization": "Basic " + self.auth_value}
+        self.sess = requests.Session()
+        print(self.url)
+        print(self.headers)
 
     def checkUserExists(self, username):
 
@@ -53,9 +56,9 @@ class Login:
     def comparePassword(self, username, password):
 
         user_query = json.dumps({"query": {"bool": {"must": {"exists": {"field": str(username)}}}}})
-
+        print(user_query)
         sender = self.sess.get(self.url + "_search", data=user_query, headers=self.headers)
-
+        print(sender.json())
         hashed_password = sender.json()['hits']['hits'][0]['_source'][username]['password']
         password_check = bcrypt.checkpw(password.encode('utf8'), hashed_password.encode('utf8'))
         return password_check

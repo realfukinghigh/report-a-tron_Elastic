@@ -7,10 +7,10 @@ class Engagements:
 
 	def __init__(self):
 
-		self.headers = {"Content-Type": "application/json"}
-		self.sess = requests.Session()
 		config_values = config.StaticValues().config_file
 		self.url = config_values['elastic_url']
+		self.headers = {"Content-Type": "application/json", "Authorization": "Basic " + config_values['reportatron_service_user']}
+		self.sess = requests.Session()
 
 	def getEngagements(self):
 

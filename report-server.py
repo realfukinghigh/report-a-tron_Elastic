@@ -255,4 +255,7 @@ def updateserviceapi():
 	return servicesflask.updateserviceapi()
 
 if __name__ == "__main__":
-	serve(app, host=config_values['server_ip'], port=int(config_values['server_port']))
+    if config_values['deployment_server'] == "waitress":
+        serve(app, host=config_values['server_ip'], port=int(config_values['server_port']))
+    else:
+        app.run(host=config_values['server_ip'], port=int(config_values['server_port']))

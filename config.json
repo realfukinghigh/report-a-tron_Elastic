@@ -1,7 +1,9 @@
 {
-  "config_type": "config.ProductionConfig",
+  "config_type": "config.DevelopmentConfig",
   "server_ip": "127.0.0.1",
   "server_port": "8443",
-  "elastic_url": "http://192.168.196.129:9200/reportatron/",
-  "elastic_users": "http://192.168.196.129:9200/reportatron_users/"
+  "elastic_url": "elastic_url",
+  "elastic_users": "elastic_users",
+  "reportatron_service_user": "auth_header",
+  "deployment_server": "waitress"
 }
