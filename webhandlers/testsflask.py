@@ -24,8 +24,10 @@ def createtestapi():
 
 		if engagement_id:
 			testConnection.createtestapi(engagement_id,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
+			print(engagement_id,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
 		else:
 			testConnection.createtestapi(None,test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
+			print(test_type,test_exec_summary,test_base_location,test_limitations,test_main_contact,timenow,test_date,test_notes)
 
 		return redirect(url_for("viewtests"))
 	except:

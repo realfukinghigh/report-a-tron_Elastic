@@ -24,6 +24,7 @@ def createassetapi():
         asset_id = assetConnection.createAsset(asset_name, asset_type, asset_owner, timenow, asset_notes, asset_internet_facing)
 
         if asset_type == "Third Party":
+            print("third party")
             tpConnection.createThirdParty(asset_id, asset_name, asset_owner)
 
         return redirect(url_for("viewassets"))
@@ -43,7 +44,7 @@ def updateassetapi():
     asset_owner = request.form['asset_owner']
     asset_notes = request.form['asset_notes']
     asset_internet_facing = request.form['asset_internet_facing']
-    
+
     try:
         assetConnection.updateAsset(asset_id, asset_name, asset_type, asset_owner, asset_notes, asset_internet_facing)
         return redirect(url_for("viewassets"))

@@ -10,7 +10,6 @@ class Tests:
 		config_values = config.StaticValues().config_file
 		self.url = config_values['elastic_url']
 		self.headers = {"Content-Type": "application/json", "Authorization": "Basic " + config_values['reportatron_service_user']}
-		self.headers = {"Content-Type": "application/json"}
 		self.sess = requests.Session()
 
 	def getTests(self):
@@ -34,6 +33,7 @@ class Tests:
 
 			else:
 				body = json.dumps({"engagement_stuff": _engagementStuff, "test_stuff": {"engagement_id": engagement_id, "test_type": test_type, "test_exec_summary": test_exec_summary, "test_base_location": test_base_location, "test_limitations": test_limitations, "test_main_contact": test_main_contact, "test_created_on": test_created_on, "test_date": test_date, "test_notes": test_notes}})
+				print(body)
 
 		else:
 			body = json.dumps({"test_stuff": {"test_type": test_type, "test_exec_summary": test_exec_summary, "test_base_location": test_base_location, "test_limitations": test_limitations, "test_main_contact": test_main_contact, "test_created_on": test_created_on, "test_date": test_date, "test_notes": test_notes}})

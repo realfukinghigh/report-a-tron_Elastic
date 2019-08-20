@@ -9,14 +9,14 @@ class Thirdparty:
         config_values = config.StaticValues().config_file
         self.url = config_values['elastic_url']
         self.headers = {"Content-Type": "application/json", "Authorization": "Basic " + config_values['reportatron_service_user']}
-        self.headers = {"Content-Type": "application/json"}
         self.sess = requests.Session()
 
     def createThirdParty(self, asset_id, asset_name, asset_owner):
 
+        print("creating third party")
         body = json.dumps({"doc": {"third_party_stuff": {"third_party_name": asset_name, "third_party_owner": asset_owner}}})
         sender = self.sess.post(self.url + "_update/" + asset_id, headers=self.headers, data=body)
-
+        print(sender.json())
         if sender.status_code != 200:
             raise ReferenceError('update failed')
 
