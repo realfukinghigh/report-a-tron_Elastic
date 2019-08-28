@@ -7,39 +7,39 @@ import flask_login
 from datetime import timedelta
 
 
-app = Flask(__name__)
+application = Flask(__name__)
 config_values = config.StaticValues().config_file
-app.config.from_object(config_values['config_type'])
-app.permanent_session_lifetime = timedelta(minutes=15)
+application.config.from_object(config_values['config_type'])
+application.permanent_session_lifetime = timedelta(minutes=15)
 
 searchConnection = search.Search()
 
 login_manager = flask_login.LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(application)
 login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def user_loader(username):
     return loginflask.user_loader(username)
 
-@app.route('/login', methods=['GET'])
+@application.route('/login', methods=['GET'])
 def login():
 	return loginflask.login()
 
-@app.route('/loginapi', methods=['POST'])
+@application.route('/loginapi', methods=['POST'])
 def loginapi():
     return loginflask.loginapi()
 
-@app.route('/logout')
+@application.route('/logout')
 def logout():
     flask_login.logout_user()
     return redirect(url_for('login'))
 
-@app.route('/changepassword')
+@application.route('/changepassword')
 def changepassword():
     return loginflask.changepassword()
 
-@app.route('/changepasswordapi', methods=['POST'])
+@application.route('/changepasswordapi', methods=['POST'])
 def changepasswordapi():
     return loginflask.changepasswordapi()
 
@@ -47,7 +47,7 @@ def changepasswordapi():
 def unauthorized_handler():
     return redirect(url_for('login'))
 
-@app.after_request
+@application.after_request
 def set_response_headers(response):
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
@@ -55,207 +55,207 @@ def set_response_headers(response):
     response.headers['Server'] = 'Report-a-Tron'
     return response
 
-@app.route("/")
+@application.route("/")
 @flask_login.login_required
 def main():
 	return render_template('index.html')
 
-@app.route("/createasset")
+@application.route("/createasset")
 @flask_login.login_required
 def createasset():
 	return assetsflask.createasset()
 
-@app.route("/error")
+@application.route("/error")
 @flask_login.login_required
 def error():
 	return render_template('error.html')
 
-@app.route("/viewassets")
+@application.route("/viewassets")
 @flask_login.login_required
 def viewassets():
 	return assetsflask.viewassets()
 
-@app.route("/createassetapi", methods=['POST'])
+@application.route("/createassetapi", methods=['POST'])
 @flask_login.login_required
 def createassetapi():
 	return assetsflask.createassetapi()
 
-@app.route("/updateasset")
+@application.route("/updateasset")
 @flask_login.login_required
 def updateasset():
 	return assetsflask.updateasset()
 
-@app.route("/updateassetapi", methods=['POST'])
+@application.route("/updateassetapi", methods=['POST'])
 @flask_login.login_required
 def updateassetapi():
 	return assetsflask.updateassetapi()
 
-@app.route("/engagements", methods=['GET'])
+@application.route("/engagements", methods=['GET'])
 @flask_login.login_required
 def engagements():
 	return engagementsflask.engagements()
 
-@app.route("/createengagement", methods=['POST'])
+@application.route("/createengagement", methods=['POST'])
 @flask_login.login_required
 def createengagement():
 	return engagementsflask.createengagement()
 
-@app.route("/openengagements")
+@application.route("/openengagements")
 @flask_login.login_required
 def openengagements():
 	return engagementsflask.openengagements()
 
-@app.route("/viewengagements")
+@application.route("/viewengagements")
 @flask_login.login_required
 def viewengagements():
 	return engagementsflask.viewengagements()
 
-@app.route("/updateengagement")
+@application.route("/updateengagement")
 @flask_login.login_required
 def updateengagement():
 	return engagementsflask.updateengagement()
 
-@app.route("/updateengagementapi", methods=['POST'])
+@application.route("/updateengagementapi", methods=['POST'])
 @flask_login.login_required
 def updateengagementapi():
 	return engagementsflask.updateengagementapi()
 
-@app.route("/createtest", methods=['GET'])
+@application.route("/createtest", methods=['GET'])
 @flask_login.login_required
 def createtest():
 	return testsflask.createtest()
 
-@app.route("/createtestapi", methods=['POST'])
+@application.route("/createtestapi", methods=['POST'])
 @flask_login.login_required
 def createtestapi():
 	return testsflask.createtestapi()
 
-@app.route("/viewtests", methods=['GET'])
+@application.route("/viewtests", methods=['GET'])
 @flask_login.login_required
 def viewtests():
 	return testsflask.viewtests()
 
-@app.route("/updatetest")
+@application.route("/updatetest")
 @flask_login.login_required
 def updatetest():
 	return testsflask.updatetest()
 
-@app.route("/updatetestapi", methods=['POST'])
+@application.route("/updatetestapi", methods=['POST'])
 @flask_login.login_required
 def updatetestapi():
 	return testsflask.updatetestapi()
 
-@app.route("/viewissues", methods=['GET'])
+@application.route("/viewissues", methods=['GET'])
 @flask_login.login_required
 def viewissues():
 	return issuesflask.viewissues()
 
-@app.route("/createissue", methods=['GET'])
+@application.route("/createissue", methods=['GET'])
 @flask_login.login_required
 def createissue():
 	return issuesflask.createissue()
 
-@app.route("/createissueapi", methods=['POST'])
+@application.route("/createissueapi", methods=['POST'])
 @flask_login.login_required
 def createissueapi():
 	return issuesflask.createissueapi()
 
-@app.route("/updateissue", methods=['GET'])
+@application.route("/updateissue", methods=['GET'])
 @flask_login.login_required
 def updateissue():
 	return issuesflask.updateissue()
 
-@app.route("/updateissueapi", methods=['POST'])
+@application.route("/updateissueapi", methods=['POST'])
 @flask_login.login_required
 def updateissueapi():
 	return issuesflask.updateissueapi()
 
-@app.route("/linkissue", methods=['GET'])
+@application.route("/linkissue", methods=['GET'])
 @flask_login.login_required
 def linkissue():
 	return issuesflask.linkissue()
 
-@app.route("/issuelinkapi", methods=['POST'])
+@application.route("/issuelinkapi", methods=['POST'])
 @flask_login.login_required
 def issuelinkapi():
 	return issuesflask.issuelinkapi()
 
-@app.route("/testreport", methods=['GET'])
+@application.route("/testreport", methods=['GET'])
 @flask_login.login_required
 def testreport():
 	return reportsflask.testReport()
 
-@app.route("/stats")
+@application.route("/stats")
 @flask_login.login_required
 def stats():
 	return render_template('stats.html')
 
-@app.route("/viewstats")
+@application.route("/viewstats")
 @flask_login.login_required
 def viewstats():
 	return statsflask.viewstats()
 
-@app.route("/search")
+@application.route("/search")
 @flask_login.login_required
 def search():
 	searchTerm = request.args.get('searchTerm')
 	data = searchConnection.search(searchTerm)
 	return render_template('searchresults.html', data=data)
 
-@app.route("/viewthirdparty")
+@application.route("/viewthirdparty")
 @flask_login.login_required
 def viewthirdparty():
 	return thirdpartyflask.viewthirdparty()
 
-@app.route("/createthirdparty")
+@application.route("/createthirdparty")
 @flask_login.login_required
 def createthirdparty():
 	return render_template('createthirdparty.html')
 
-@app.route("/updatethirdparty")
+@application.route("/updatethirdparty")
 @flask_login.login_required
 def updatethirdparty():
 	return thirdpartyflask.updatethirdparty()
 
-@app.route("/updatethirdpartyapi", methods=['POST'])
+@application.route("/updatethirdpartyapi", methods=['POST'])
 @flask_login.login_required
 def updatethirdpartyapi():
 	return thirdpartyflask.updatethirdpartyapi()
 
-@app.route('/viewservices')
+@application.route('/viewservices')
 @flask_login.login_required
 def viewservices():
 	return servicesflask.viewservices()
 
-@app.route('/viewservicedetail')
+@application.route('/viewservicedetail')
 @flask_login.login_required
 def viewservicedetail():
 	service_id = request.args.get('service_id')
 	return servicesflask.viewservicedetail(service_id)
 
-@app.route('/createservice')
+@application.route('/createservice')
 @flask_login.login_required
 def createservice():
 	return servicesflask.createservice()
 
-@app.route('/createserviceapi', methods=['POST'])
+@application.route('/createserviceapi', methods=['POST'])
 @flask_login.login_required
 def createserviceapi():
 	return servicesflask.createserviceapi()
 
-@app.route('/updateservice')
+@application.route('/updateservice')
 @flask_login.login_required
 def updateservice():
 	service_id = request.args.get('service_id')
 	return servicesflask.updateservice(service_id)
 
-@app.route('/updateserviceapi', methods=['POST'])
+@application.route('/updateserviceapi', methods=['POST'])
 @flask_login.login_required
 def updateserviceapi():
 	return servicesflask.updateserviceapi()
 
 if __name__ == "__main__":
     if config_values['deployment_server'] == "waitress":
-        serve(app, host=config_values['server_ip'], port=int(config_values['server_port']))
+        serve(application, host=config_values['server_ip'], port=int(config_values['server_port']))
     else:
-        app.run(host=config_values['server_ip'], port=int(config_values['server_port']))
+        application.run(host=config_values['server_ip'], port=int(config_values['server_port']))

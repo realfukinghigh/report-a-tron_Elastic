@@ -2,8 +2,7 @@ markdown
 datetime
 flask
 requests
-json
-random
-calendar
-os
 waitress
+bcrypt
+flaskapp
+flask_login
