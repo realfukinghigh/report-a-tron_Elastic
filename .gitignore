@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+config.json
+/templates/report.md
+/templates/convert_md.html
+
+aws_build/reportatron.tf
